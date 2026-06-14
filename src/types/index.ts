@@ -6,13 +6,13 @@ export type ModelId =
   | "deepseek-chat";
 
 export type UseCase =
-  | "Customer Support"
-  | "Translation"
-  | "Summarization"
-  | "Document Analysis"
-  | "Code Generation"
-  | "Internal Knowledge Base"
-  | "Other";
+  | "カスタマーサポート"
+  | "翻訳"
+  | "要約"
+  | "文書分析"
+  | "コード生成"
+  | "社内ナレッジ検索"
+  | "その他";
 
 export interface CostInput {
   projectName: string;

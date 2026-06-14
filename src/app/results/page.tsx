@@ -420,6 +420,30 @@ export default function ResultsPage() {
           </div>
         </div>
 
+        <div className="report-section mt-10 rounded-2xl border border-indigo-100 bg-gradient-to-br from-indigo-50 to-white p-8 text-center shadow-sm print:hidden">
+          <h2 className="text-xl font-bold text-gray-900">
+            次のステップ
+          </h2>
+          <p className="mx-auto mt-2 max-w-lg text-sm text-gray-600">
+            診断結果を PDF で社内共有するか、専門家による無料相談で具体的な削減施策を検討できます。
+          </p>
+          <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <button
+              type="button"
+              onClick={() => window.print()}
+              className="inline-flex w-full items-center justify-center rounded-xl bg-indigo-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-indigo-700 sm:w-auto"
+            >
+              PDFレポートを出力
+            </button>
+            <a
+              href="mailto:hello@aicostpilot.com?subject=AI%20Cost%20Pilot%20無料相談の予約"
+              className="inline-flex w-full items-center justify-center rounded-xl border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-800 transition hover:bg-gray-50 sm:w-auto"
+            >
+              無料相談を予約する
+            </a>
+          </div>
+        </div>
+
         <footer className="mt-10 border-t border-gray-200 pt-6 text-center text-xs text-gray-400">
           本レポートは入力データに基づく試算です。実際の請求額はプロバイダー設定・割引・為替等により異なる場合があります。
         </footer>

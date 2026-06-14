@@ -11,21 +11,21 @@ export default function Home() {
         <section className="bg-gradient-to-b from-gray-50 to-white px-4 py-20 sm:px-6 sm:py-28">
           <div className="mx-auto max-w-4xl text-center">
             <div className="mb-6 inline-flex items-center rounded-full border border-indigo-100 bg-indigo-50 px-4 py-1.5 text-sm font-medium text-indigo-700">
-              B2B SaaS 向け AI コスト最適化
+              生成AIを業務利用する企業向け
             </div>
             <h1 className="text-balance text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-              生成AIコスト診断ツール
+              生成AI APIコストを見える化し、無駄な支出を削減
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-balance text-lg leading-relaxed text-gray-600">
-              LLM API
-              の利用料、失敗リクエスト、過剰なトークン消費を可視化し、削減ポイントを提案します。
+              ChatGPT / Claude / Gemini などの LLM API
+              利用料を試算し、失敗リクエスト・再試行・過剰なトークン消費による無駄を診断します。
             </p>
             <div className="mt-10">
               <Link
                 href="/diagnose"
                 className="inline-flex items-center rounded-xl bg-indigo-600 px-8 py-3.5 text-base font-semibold text-white shadow-sm transition hover:bg-indigo-700"
               >
-                無料で診断を始める
+                3分でコスト診断を始める
               </Link>
             </div>
           </div>
@@ -73,7 +73,7 @@ export default function Home() {
               href="/diagnose"
               className="mt-6 inline-flex items-center rounded-xl bg-indigo-600 px-6 py-3 font-semibold text-white transition hover:bg-indigo-700"
             >
-              無料で診断を始める
+              3分でコスト診断を始める
             </Link>
           </div>
         </section>

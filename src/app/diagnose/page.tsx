@@ -15,7 +15,7 @@ const defaultForm: CostInput = {
   averageOutputTokens: 400,
   failureRate: 5,
   averageRetries: 1,
-  useCase: "Customer Support",
+  useCase: "カスタマーサポート",
   hasCache: false,
   hasRag: false,
   hasAgent: false,

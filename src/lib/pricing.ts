@@ -37,11 +37,11 @@ export const MODEL_PRICING: Record<ModelId, ModelPricing> = {
 };
 
 export const USE_CASE_OPTIONS = [
-  "Customer Support",
-  "Translation",
-  "Summarization",
-  "Document Analysis",
-  "Code Generation",
-  "Internal Knowledge Base",
-  "Other",
+  "カスタマーサポート",
+  "翻訳",
+  "要約",
+  "文書分析",
+  "コード生成",
+  "社内ナレッジ検索",
+  "その他",
 ] as const;
