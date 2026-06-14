@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family:
+    "Hiragino Sans",
+    "Hiragino Kaku Gothic ProN",
+    "Noto Sans JP",
+    "Yu Gothic",
+    "Meiryo",
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm 12mm;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #111827;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .print\:hidden {
+    display: none !important;
+  }
+
+  .report-print-area {
+    width: 100%;
+  }
+
+  .report-section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    border-color: #e5e7eb !important;
+    box-shadow: none !important;
+  }
+
+  .report-print-area .shadow-sm {
+    box-shadow: none !important;
+  }
+
+  .report-print-area .rounded-2xl,
+  .report-print-area .rounded-xl {
+    border-radius: 0.375rem !important;
+  }
+}
