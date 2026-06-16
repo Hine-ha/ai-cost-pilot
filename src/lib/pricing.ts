@@ -1,11 +1,11 @@
 import { ModelId, ModelPricing } from "@/types";
 
 export const MODEL_OPTIONS: { value: ModelId; label: string }[] = [
-  { value: "gpt-4.1", label: "GPT-4.1" },
-  { value: "gpt-4.1-mini", label: "GPT-4.1 mini" },
-  { value: "claude-sonnet", label: "Claude Sonnet" },
-  { value: "gemini-1.5-pro", label: "Gemini 1.5 Pro" },
-  { value: "deepseek-chat", label: "DeepSeek Chat" },
+  { value: "gpt-4.1", label: "GPT-4.1（OpenAI）" },
+  { value: "gpt-4.1-mini", label: "GPT-4.1 ミニ（OpenAI）" },
+  { value: "claude-sonnet", label: "Claude Sonnet（Anthropic）" },
+  { value: "gemini-1.5-pro", label: "Gemini 1.5 Pro（Google）" },
+  { value: "deepseek-chat", label: "DeepSeek Chat（DeepSeek）" },
 ];
 
 export const MODEL_PRICING: Record<ModelId, ModelPricing> = {

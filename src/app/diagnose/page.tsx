@@ -46,7 +46,7 @@ export default function DiagnosePage() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">コスト診断入力</h1>
           <p className="mt-2 text-gray-600">
-            プロジェクトの API 利用状況を入力してください。診断結果は即座に表示されます。
+            プロジェクトの利用状況を入力してください。診断結果はすぐに表示されます。
           </p>
         </div>
 
@@ -74,7 +74,7 @@ export default function DiagnosePage() {
                 onChange={(e) =>
                   setForm((prev) => ({ ...prev, projectName: e.target.value }))
                 }
-                placeholder="例: カスタマーサポート Bot"
+                placeholder="例: カスタマーサポートボット"
                 className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
               />
             </div>
@@ -111,7 +111,7 @@ export default function DiagnosePage() {
                   htmlFor="useCase"
                   className="mb-1.5 block text-sm font-medium text-gray-700"
                 >
-                  ユースケース
+                  利用シーン
                 </label>
                 <select
                   id="useCase"
@@ -266,7 +266,7 @@ export default function DiagnosePage() {
                     キャッシュを利用
                   </span>
                   <p className="text-sm text-gray-500">
-                    レスポンスキャッシュで入力トークンを削減
+                    同一・類似リクエストの応答を再利用し、入力トークンを削減します
                   </p>
                 </div>
               </label>
@@ -282,10 +282,10 @@ export default function DiagnosePage() {
                 />
                 <div>
                   <span className="font-medium text-gray-900">
-                    RAG を利用
+                    検索拡張生成を利用
                   </span>
                   <p className="text-sm text-gray-500">
-                    検索拡張生成によりコンテキストが増加
+                    関連情報の検索により、入力コンテキストが増加します
                   </p>
                 </div>
               </label>
@@ -307,7 +307,7 @@ export default function DiagnosePage() {
                     エージェント構成
                   </span>
                   <p className="text-sm text-gray-500">
-                    複数ステップの推論で API 呼び出しが増加
+                    複数ステップの推論により、呼び出し回数が増加します
                   </p>
                 </div>
               </label>
