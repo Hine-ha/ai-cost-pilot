@@ -19,6 +19,14 @@ export default function Header() {
           >
             診断を始める
           </Link>
+          <a
+            href="YOUR_GOOGLE_FORM_URL_HERE"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-lg px-2 py-2 font-medium text-gray-700 transition hover:bg-gray-100"
+          >
+            フィードバック
+          </a>
         </nav>
       </div>
     </header>

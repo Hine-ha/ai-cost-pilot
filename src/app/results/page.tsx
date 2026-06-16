@@ -89,6 +89,9 @@ export default function ResultsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [input, setInput] = useState<CostInput | null>(null);
   const [result, setResult] = useState<CostResult | null>(null);
+  const [copySuccessMessage, setCopySuccessMessage] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
     try {
@@ -127,6 +130,50 @@ export default function ResultsPage() {
     () => (input ? getReportRecommendations(input) : []),
     [input]
   );
+
+  const mainRecommendations = useMemo(
+    () => recommendations.slice(0, 5),
+    [recommendations]
+  );
+
+  const diagnosisSummaryText = useMemo(() => {
+    if (!input || !result) return "";
+
+    const modelLabelLocal = MODEL_PRICING[input.model].label;
+    const totalWasteCostLocal = result.failedWaste + result.retryWaste;
+    const wasteRateText = formatPercent(result.totalWastePercentage);
+
+    const savingsRateLocal =
+      result.totalCost > 0
+        ? (result.estimatedSavings / result.totalCost) * 100
+        : 0;
+
+    const savingsRateText = formatPercent(savingsRateLocal);
+    const mainRecsText =
+      mainRecommendations.length > 0
+        ? mainRecommendations
+            .map((r, idx) => `${idx + 1}. ${r.title}`)
+            .join("\n")
+        : "- （推奨事項なし）";
+
+    return [
+      "【診断サマリー】",
+      `プロジェクト名: ${input.projectName}`,
+      `選択モデル: ${modelLabelLocal}`,
+      `ユースケース: ${input.useCase}`,
+      `推定月次コスト: ${formatUsd(result.totalCost)}`,
+      `基本コスト: ${formatUsd(result.baseCost)}`,
+      `失敗リクエスト無駄: ${formatUsd(result.failedWaste)}`,
+      `再試行無駄: ${formatUsd(result.retryWaste)}`,
+      `合計無駄コスト: ${formatUsd(totalWasteCostLocal)}`,
+      `無駄率: ${wasteRateText}`,
+      `推定削減額: ${formatUsd(result.estimatedSavings)}`,
+      `削減率: ${savingsRateText}`,
+      `最適化後月次コスト: ${formatUsd(result.optimizedCost)}`,
+      "主な推奨事項:",
+      mainRecsText,
+    ].join("\n");
+  }, [input, result, mainRecommendations]);
 
   if (isLoading) {
     return (
@@ -168,6 +215,35 @@ export default function ResultsPage() {
     totalCost > 0 ? (baseCost / totalCost) * 100 : 0;
   const retryCostShare =
     totalCost > 0 ? (retryWaste / totalCost) * 100 : 0;
+
+  const copyDiagnosisSummary = async () => {
+    try {
+      await navigator.clipboard.writeText(diagnosisSummaryText);
+      setCopySuccessMessage(
+        "コピーしました。フォームに貼り付けて送信できます。"
+      );
+      window.setTimeout(() => setCopySuccessMessage(null), 3000);
+      return;
+    } catch {
+      // Fallback: older browsers / non-secure contexts
+      const el = document.createElement("textarea");
+      el.value = diagnosisSummaryText;
+      el.setAttribute("readonly", "true");
+      el.style.position = "absolute";
+      el.style.left = "-9999px";
+      document.body.appendChild(el);
+      el.select();
+      const ok = document.execCommand("copy");
+      document.body.removeChild(el);
+
+      if (ok) {
+        setCopySuccessMessage(
+          "コピーしました。フォームに貼り付けて送信できます。"
+        );
+        window.setTimeout(() => setCopySuccessMessage(null), 3000);
+      }
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 print:bg-white">
@@ -444,27 +520,69 @@ export default function ResultsPage() {
           </div>
         </div>
 
-        <div className="report-section mt-8 rounded-2xl border border-gray-200 bg-white p-8 shadow-sm print:hidden">
+        <div className="report-section mt-8 rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
           <h2 className="text-lg font-semibold text-gray-900">
-            ご相談・フィードバック
+            詳細診断・フィードバック
           </h2>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-gray-600">
-            より正確な診断をご希望の場合は、API利用ログや請求データをもとに詳細分析できます。
+          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-gray-600">
+            現在の診断結果は、入力いただいた情報をもとにした「初期見積り」です。
+            より正確な分析を行う場合は、API利用ログ、請求データ、またはCSVデータの実データをもとに詳細診断を実施できます。
+            また、実際の利用状況が分かるほど、推奨事項はより具体的で精度の高い内容になります。
+            下記フォームから詳細診断のご依頼やフィードバックをお送りください。
           </p>
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+
+          <div className="mt-6 rounded-xl border border-gray-100 bg-gray-50 p-5">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+              <div>
+                <h3 className="text-sm font-semibold text-gray-900">
+                  診断サマリー
+                </h3>
+                <p className="mt-1 text-xs text-gray-500">
+                  可能であれば、コピーした診断サマリーをフォームに貼り付けてお送りください。
+                  いただいた情報をもとに、より具体的な改善提案を作成します。
+                </p>
+              </div>
+              <div className="print:hidden">
+                <button
+                  type="button"
+                  onClick={copyDiagnosisSummary}
+                  className="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700"
+                >
+                  診断サマリーをコピー
+                </button>
+                {copySuccessMessage && (
+                  <p className="mt-2 text-xs font-medium text-emerald-700">
+                    {copySuccessMessage}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <div className="mt-4 whitespace-pre-wrap text-sm leading-relaxed text-gray-800">
+              {diagnosisSummaryText}
+            </div>
+          </div>
+
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex-1">
+              <a
+                href="YOUR_GOOGLE_FORM_URL_HERE"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-full items-center justify-center rounded-xl bg-indigo-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-indigo-700 print:hidden"
+              >
+                詳細診断を依頼する / フィードバックを送る
+              </a>
+              <p className="mt-2 text-xs text-gray-500">
+                フォーム送信時に診断サマリーを貼り付けると、確認すべき観点を共有でき、調査・改善提案がスムーズになります。
+              </p>
+            </div>
+
             <a
-              href="mailto:pchatemath@gmail.com?subject=AI%20Cost%20Pilot%20診断結果についての相談"
-              className="inline-flex flex-1 items-center justify-center rounded-xl border border-indigo-200 bg-indigo-50 px-5 py-3 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-100"
+              href="mailto:by1019322@qq.com?subject=AI%20Cost%20Pilot%20%E8%A9%B3%E7%B4%B0%E8%A8%BA%E6%96%AD%E3%81%AE%E7%9B%B8%E8%AB%87"
+              className="inline-flex w-full items-center justify-center rounded-xl border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-800 transition hover:bg-gray-50 print:hidden sm:w-auto sm:flex-none sm:min-w-[220px]"
             >
-              診断結果について相談する
-            </a>
-            <a
-              href="https://forms.gle/1SWUTJafp6iuTTg49"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex flex-1 items-center justify-center rounded-xl border border-gray-300 bg-white px-5 py-3 text-sm font-semibold text-gray-800 transition hover:bg-gray-50"
-            >
-              フィードバックを送る
+              メールで相談する
             </a>
           </div>
         </div>
