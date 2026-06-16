@@ -444,6 +444,31 @@ export default function ResultsPage() {
           </div>
         </div>
 
+        <div className="report-section mt-8 rounded-2xl border border-gray-200 bg-white p-8 shadow-sm print:hidden">
+          <h2 className="text-lg font-semibold text-gray-900">
+            ご相談・フィードバック
+          </h2>
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-gray-600">
+            より正確な診断をご希望の場合は、API利用ログや請求データをもとに詳細分析できます。
+          </p>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <a
+              href="mailto:pchatemath@gmail.com?subject=AI%20Cost%20Pilot%20診断結果についての相談"
+              className="inline-flex flex-1 items-center justify-center rounded-xl border border-indigo-200 bg-indigo-50 px-5 py-3 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-100"
+            >
+              診断結果について相談する
+            </a>
+            <a
+              href="https://forms.gle/1SWUTJafp6iuTTg49"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex flex-1 items-center justify-center rounded-xl border border-gray-300 bg-white px-5 py-3 text-sm font-semibold text-gray-800 transition hover:bg-gray-50"
+            >
+              フィードバックを送る
+            </a>
+          </div>
+        </div>
+
         <footer className="mt-10 border-t border-gray-200 pt-6 text-center text-xs text-gray-400">
           本レポートは入力データに基づく試算です。実際の請求額はプロバイダー設定・割引・為替等により異なる場合があります。
         </footer>
