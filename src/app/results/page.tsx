@@ -17,6 +17,7 @@ import {
   getReportRecommendations,
 } from "@/lib/report";
 import { loadCostInput } from "@/lib/storage";
+import { FEEDBACK_FORM_URL } from "@/lib/links";
 import { CostInput, CostResult } from "@/types";
 
 function ReportSection({
@@ -566,7 +567,7 @@ export default function ResultsPage() {
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex-1">
               <a
-                href="YOUR_GOOGLE_FORM_URL_HERE"
+                href={FEEDBACK_FORM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex w-full items-center justify-center rounded-xl bg-indigo-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-indigo-700 print:hidden"

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FEEDBACK_FORM_URL } from "@/lib/links";
 
 export default function Header() {
   return (
@@ -20,7 +21,7 @@ export default function Header() {
             診断を始める
           </Link>
           <a
-            href="YOUR_GOOGLE_FORM_URL_HERE"
+            href={FEEDBACK_FORM_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-lg px-2 py-2 font-medium text-gray-700 transition hover:bg-gray-100"
