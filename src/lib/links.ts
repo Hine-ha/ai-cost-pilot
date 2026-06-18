@@ -1,1 +1,1 @@
-export const FEEDBACK_FORM_URL = "https://forms.gle/eQQdcnPsmrm5QqZMA";
+export const FEEDBACK_FORM_URL = "https://forms.gle/uxrswX5sRFnnzUyW7";
