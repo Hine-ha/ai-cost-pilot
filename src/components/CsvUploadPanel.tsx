@@ -69,6 +69,33 @@ export default function CsvUploadPanel() {
         </p>
       </div>
 
+      <div className="rounded-xl border border-gray-100 bg-gray-50 px-5 py-4">
+        <h3 className="text-sm font-semibold text-gray-900">
+          CSVファイルはどこから取得できますか？
+        </h3>
+        <p className="mt-2 text-sm leading-relaxed text-gray-600">
+          CSVファイルは、AIアプリケーションのAPI利用ログ、LLM監視ツール、または社内の利用記録からエクスポートしたデータを想定しています。現在は
+          AI Cost Pilot 標準CSV形式に対応しています。ログをお持ちでない場合は、手動入力で簡易診断をご利用ください。
+        </p>
+        <ul className="mt-3 space-y-1.5 text-sm text-gray-700">
+          <li className="flex gap-2">
+            <span className="text-indigo-500">•</span>
+            <span>自社アプリケーションのAPI利用ログ</span>
+          </li>
+          <li className="flex gap-2">
+            <span className="text-indigo-500">•</span>
+            <span>Langfuse / LiteLLM / Helicone などのLLM監視ツール</span>
+          </li>
+          <li className="flex gap-2">
+            <span className="text-indigo-500">•</span>
+            <span>Google Cloud Billing / Vertex AI などのクラウド利用データ</span>
+          </li>
+        </ul>
+        <p className="mt-3 text-xs leading-relaxed text-gray-500">
+          将来的には、OpenAI / Claude / Gemini などのUsage API連携による自動取得にも対応予定です。
+        </p>
+      </div>
+
       <div>
         <label
           htmlFor="csvProjectName"

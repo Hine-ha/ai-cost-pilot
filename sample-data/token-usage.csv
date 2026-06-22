@@ -1,0 +1,121 @@
+timestamp,model,input_tokens,output_tokens,status,latency_ms,retries,use_case
+2026-06-01T13:07:04Z,DeepSeek Chat,1617,336,success,1428,0,translation
+2026-06-01T17:05:18Z,GPT-4.1 mini,4993,1027,success,938,0,document_analysis
+2026-06-01T22:05:14Z,DeepSeek Chat,1802,342,success,1547,0,code_generation
+2026-06-02T11:16:55Z,Claude Sonnet,2483,266,success,1928,0,customer_support
+2026-06-02T12:43:41Z,Gemini 1.5 Pro,924,612,success,2341,0,customer_support
+2026-06-02T19:57:02Z,GPT-4.1 mini,1852,443,success,1064,0,customer_support
+2026-06-02T20:42:58Z,GPT-4.1 mini,1242,1658,success,1317,0,code_generation
+2026-06-02T22:00:29Z,Gemini 1.5 Pro,804,450,success,1810,0,code_generation
+2026-06-02T23:10:00Z,GPT-4.1 mini,7864,1362,success,789,0,document_analysis
+2026-06-02T23:37:44Z,Gemini 1.5 Pro,708,1013,success,2430,0,translation
+2026-06-03T12:53:12Z,GPT-4.1 mini,1239,483,success,1304,0,translation
+2026-06-03T16:15:12Z,GPT-4.1,1518,587,success,2055,0,code_generation
+2026-06-03T16:37:01Z,GPT-4.1 mini,1987,1068,success,1312,0,code_generation
+2026-06-03T16:38:27Z,GPT-4.1 mini,2284,423,success,1092,0,internal_kb
+2026-06-04T01:17:02Z,GPT-4.1,1198,1728,success,3003,0,code_generation
+2026-06-04T02:39:34Z,GPT-4.1,7848,455,error,3299,2,document_analysis
+2026-06-04T04:59:22Z,GPT-4.1,1256,591,success,3521,0,translation
+2026-06-04T10:16:08Z,GPT-4.1 mini,3299,475,success,1171,0,internal_kb
+2026-06-04T12:27:08Z,GPT-4.1,3493,170,success,1874,0,summarization
+2026-06-04T20:23:22Z,GPT-4.1 mini,2093,559,success,1239,0,internal_kb
+2026-06-05T05:37:27Z,Gemini 1.5 Pro,3747,1362,success,1499,0,document_analysis
+2026-06-05T10:06:06Z,Gemini 1.5 Pro,5902,1267,success,2454,0,document_analysis
+2026-06-05T11:26:42Z,GPT-4.1 mini,1712,515,success,978,0,internal_kb
+2026-06-05T23:47:30Z,GPT-4.1 mini,3414,700,success,1184,0,internal_kb
+2026-06-06T00:03:37Z,DeepSeek Chat,724,1831,success,726,0,code_generation
+2026-06-06T10:55:10Z,GPT-4.1,3203,767,success,2196,0,document_analysis
+2026-06-06T11:08:30Z,DeepSeek Chat,1955,423,success,998,0,customer_support
+2026-06-06T11:16:25Z,GPT-4.1,2228,434,success,3304,0,internal_kb
+2026-06-06T11:45:10Z,GPT-4.1 mini,628,1431,success,782,0,code_generation
+2026-06-06T12:56:36Z,GPT-4.1,2298,697,success,3901,0,customer_support
+2026-06-06T16:42:06Z,GPT-4.1 mini,1432,1571,success,1539,0,code_generation
+2026-06-06T16:55:59Z,GPT-4.1,7508,600,error,5378,0,document_analysis
+2026-06-06T17:57:58Z,GPT-4.1,2099,633,success,1436,0,customer_support
+2026-06-06T22:24:20Z,GPT-4.1 mini,5677,1091,success,949,0,document_analysis
+2026-06-07T01:49:41Z,GPT-4.1 mini,1401,645,success,543,0,customer_support
+2026-06-07T02:36:02Z,DeepSeek Chat,1463,831,success,1869,0,translation
+2026-06-07T03:39:51Z,Claude Sonnet,6808,1292,success,3670,0,document_analysis
+2026-06-07T04:21:20Z,Claude Sonnet,1083,354,success,4011,0,customer_support
+2026-06-07T09:38:13Z,DeepSeek Chat,2833,474,success,1327,0,summarization
+2026-06-07T11:27:44Z,DeepSeek Chat,1955,1771,success,910,0,code_generation
+2026-06-07T12:28:07Z,GPT-4.1 mini,2245,558,success,834,0,internal_kb
+2026-06-07T17:53:40Z,Claude Sonnet,1007,613,success,2222,0,code_generation
+2026-06-07T18:32:19Z,DeepSeek Chat,5672,1224,success,1391,0,document_analysis
+2026-06-07T21:16:14Z,GPT-4.1,1788,361,error,3308,3,internal_kb
+2026-06-08T06:54:15Z,GPT-4.1,5611,380,success,2546,0,summarization
+2026-06-08T11:49:08Z,Gemini 1.5 Pro,2661,376,success,1669,0,summarization
+2026-06-08T20:14:41Z,GPT-4.1,1164,586,error,4460,1,internal_kb
+2026-06-08T21:19:48Z,GPT-4.1 mini,7409,851,success,834,0,document_analysis
+2026-06-09T05:10:38Z,Gemini 1.5 Pro,1469,598,success,2636,0,internal_kb
+2026-06-09T12:55:02Z,Claude Sonnet,908,1136,success,2854,0,translation
+2026-06-09T14:57:36Z,GPT-4.1,2181,373,error,3781,0,summarization
+2026-06-10T01:31:35Z,DeepSeek Chat,1475,961,success,1251,0,translation
+2026-06-10T07:42:37Z,Claude Sonnet,1247,834,success,4086,0,code_generation
+2026-06-10T08:24:57Z,DeepSeek Chat,640,1867,success,1289,0,code_generation
+2026-06-11T06:03:35Z,GPT-4.1 mini,1734,336,success,1260,0,customer_support
+2026-06-11T07:28:28Z,DeepSeek Chat,1546,784,success,1926,0,translation
+2026-06-11T08:33:16Z,Claude Sonnet,2193,317,success,3484,0,customer_support
+2026-06-11T12:39:54Z,DeepSeek Chat,1732,624,success,1419,0,customer_support
+2026-06-11T13:32:58Z,Claude Sonnet,616,820,error,3408,3,translation
+2026-06-11T17:01:24Z,GPT-4.1 mini,2656,570,success,1044,0,internal_kb
+2026-06-12T04:41:21Z,GPT-4.1,7015,616,success,2276,0,document_analysis
+2026-06-12T10:23:39Z,DeepSeek Chat,6621,505,success,1384,0,document_analysis
+2026-06-12T17:49:08Z,GPT-4.1,2946,684,success,2019,0,internal_kb
+2026-06-12T19:21:01Z,GPT-4.1,2731,447,success,2020,0,summarization
+2026-06-12T21:08:46Z,Claude Sonnet,1568,797,success,4393,0,code_generation
+2026-06-12T21:31:28Z,GPT-4.1,681,1184,success,2913,0,code_generation
+2026-06-13T04:33:22Z,GPT-4.1 mini,3254,369,success,1030,0,internal_kb
+2026-06-13T07:38:20Z,DeepSeek Chat,7135,1273,success,1383,0,document_analysis
+2026-06-13T08:12:45Z,Gemini 1.5 Pro,3232,414,success,1960,0,internal_kb
+2026-06-13T22:35:14Z,Gemini 1.5 Pro,514,372,success,1005,0,translation
+2026-06-14T04:51:07Z,Claude Sonnet,1511,745,success,2925,0,customer_support
+2026-06-14T07:38:50Z,Gemini 1.5 Pro,1570,689,success,1696,0,translation
+2026-06-14T08:40:10Z,Claude Sonnet,2002,283,success,2587,0,internal_kb
+2026-06-14T09:42:24Z,GPT-4.1 mini,1812,532,success,769,0,customer_support
+2026-06-14T17:37:42Z,GPT-4.1 mini,3940,860,success,1521,0,document_analysis
+2026-06-14T18:39:56Z,GPT-4.1 mini,993,1742,success,1254,0,code_generation
+2026-06-14T19:43:03Z,GPT-4.1,1652,611,error,4838,3,translation
+2026-06-15T00:07:01Z,DeepSeek Chat,3003,264,success,795,0,summarization
+2026-06-15T05:23:28Z,Claude Sonnet,3991,907,success,2815,0,document_analysis
+2026-06-15T12:06:56Z,GPT-4.1,2472,204,success,1730,0,summarization
+2026-06-15T16:06:54Z,GPT-4.1,3686,403,success,3815,0,summarization
+2026-06-16T09:19:39Z,Gemini 1.5 Pro,616,1667,success,1438,0,code_generation
+2026-06-16T10:13:04Z,GPT-4.1 mini,5710,1354,success,763,0,document_analysis
+2026-06-16T10:18:44Z,GPT-4.1 mini,2207,439,success,1390,0,customer_support
+2026-06-16T16:44:24Z,Claude Sonnet,4998,702,success,1698,0,document_analysis
+2026-06-16T18:56:46Z,GPT-4.1 mini,965,1339,success,1480,0,code_generation
+2026-06-17T01:10:42Z,GPT-4.1,4111,489,success,2204,0,summarization
+2026-06-17T04:57:34Z,GPT-4.1,1464,365,error,4409,3,code_generation
+2026-06-17T09:55:49Z,GPT-4.1,4792,760,success,3157,0,document_analysis
+2026-06-17T10:31:06Z,GPT-4.1,1182,1261,success,2219,0,code_generation
+2026-06-17T10:53:26Z,GPT-4.1 mini,1763,219,success,596,0,customer_support
+2026-06-17T15:13:40Z,GPT-4.1 mini,4705,191,success,727,0,summarization
+2026-06-17T15:21:06Z,GPT-4.1,3792,1135,success,2913,0,document_analysis
+2026-06-17T20:18:05Z,GPT-4.1 mini,1578,484,success,1440,0,customer_support
+2026-06-17T20:25:55Z,Claude Sonnet,2146,755,success,1862,0,customer_support
+2026-06-17T23:33:31Z,Gemini 1.5 Pro,1062,750,success,1414,0,translation
+2026-06-17T23:59:33Z,GPT-4.1,1263,1300,error,3452,1,code_generation
+2026-06-18T09:16:21Z,GPT-4.1 mini,1165,1438,error,2300,0,code_generation
+2026-06-18T14:02:46Z,GPT-4.1 mini,855,1075,success,856,0,code_generation
+2026-06-18T15:55:00Z,DeepSeek Chat,1365,648,success,944,0,translation
+2026-06-18T17:48:35Z,GPT-4.1,3721,1044,success,1626,0,document_analysis
+2026-06-18T20:48:15Z,DeepSeek Chat,2920,251,success,721,0,summarization
+2026-06-18T21:02:51Z,GPT-4.1 mini,5193,535,success,1558,0,document_analysis
+2026-06-18T21:50:55Z,GPT-4.1 mini,548,975,success,894,0,translation
+2026-06-19T00:09:04Z,GPT-4.1,1129,909,success,2822,0,translation
+2026-06-19T03:00:19Z,GPT-4.1 mini,1380,1104,success,1247,0,translation
+2026-06-19T17:07:09Z,Gemini 1.5 Pro,1364,910,success,1586,0,translation
+2026-06-19T17:37:27Z,GPT-4.1 mini,1871,423,success,1339,0,code_generation
+2026-06-19T18:15:25Z,GPT-4.1,1104,1485,success,2955,0,code_generation
+2026-06-19T19:04:49Z,GPT-4.1 mini,4627,410,success,1599,0,summarization
+2026-06-19T23:38:27Z,GPT-4.1 mini,1011,1760,success,1614,0,code_generation
+2026-06-20T01:45:20Z,GPT-4.1 mini,3044,402,success,1234,0,internal_kb
+2026-06-20T09:53:29Z,DeepSeek Chat,1391,480,success,1934,0,translation
+2026-06-20T12:10:47Z,Claude Sonnet,5123,906,success,2611,0,document_analysis
+2026-06-20T12:37:25Z,GPT-4.1 mini,783,821,success,1356,0,translation
+2026-06-20T15:03:10Z,GPT-4.1 mini,1599,471,success,1387,0,customer_support
+2026-06-21T02:40:44Z,Claude Sonnet,1164,1163,success,1867,0,translation
+2026-06-21T03:18:28Z,DeepSeek Chat,3994,459,success,1463,0,document_analysis
+2026-06-21T03:48:54Z,GPT-4.1 mini,1332,797,success,1473,0,translation
+2026-06-21T05:26:51Z,DeepSeek Chat,2016,336,success,1585,0,internal_kb
