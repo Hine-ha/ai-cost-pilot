@@ -41,6 +41,59 @@ export interface CostResult {
   retryCount: number;
 }
 
+export interface ModelCostBreakdown {
+  modelId: ModelId | null;
+  modelLabel: string;
+  requestCount: number;
+  cost: number;
+  sharePercent: number;
+}
+
+export interface CsvDiagnosisResult {
+  totalRequests: number;
+  successfulRequests: number;
+  failedRequests: number;
+  failureRate: number;
+  totalInputTokens: number;
+  totalOutputTokens: number;
+  averageInputTokens: number;
+  averageOutputTokens: number;
+  totalRetries: number;
+  averageRetries: number;
+  averageLatencyMs: number;
+  costByModel: ModelCostBreakdown[];
+  totalCost: number;
+  baseCost: number;
+  failedRequestWaste: number;
+  retryWaste: number;
+  totalWaste: number;
+  wasteRate: number;
+  estimatedSavings: number;
+  optimizedCost: number;
+  unknownModels: string[];
+  hasUnknownModels: boolean;
+  successCount: number;
+  failedRequestCount: number;
+  retryCount: number;
+  failedWaste: number;
+  totalWastePercentage: number;
+}
+
+export type DiagnosisMode = "manual" | "csv";
+
+export interface ManualDiagnosisSession {
+  mode: "manual";
+  input: CostInput;
+}
+
+export interface CsvDiagnosisSession {
+  mode: "csv";
+  projectName: string;
+  result: CsvDiagnosisResult;
+}
+
+export type DiagnosisSession = ManualDiagnosisSession | CsvDiagnosisSession;
+
 export interface ModelPricing {
   label: string;
   inputPer1M: number;

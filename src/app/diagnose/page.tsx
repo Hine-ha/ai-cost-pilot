@@ -3,9 +3,12 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
+import CsvUploadPanel from "@/components/CsvUploadPanel";
 import { MODEL_OPTIONS, USE_CASE_OPTIONS } from "@/lib/pricing";
 import { saveCostInput } from "@/lib/storage";
 import { CostInput, ModelId, UseCase } from "@/types";
+
+type DiagnoseTab = "manual" | "csv";
 
 const defaultForm: CostInput = {
   projectName: "",
@@ -23,6 +26,7 @@ const defaultForm: CostInput = {
 
 export default function DiagnosePage() {
   const router = useRouter();
+  const [activeTab, setActiveTab] = useState<DiagnoseTab>("manual");
   const [form, setForm] = useState<CostInput>(defaultForm);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -46,10 +50,38 @@ export default function DiagnosePage() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">コスト診断入力</h1>
           <p className="mt-2 text-gray-600">
-            プロジェクトの利用状況を入力してください。診断結果はすぐに表示されます。
+            手動入力または CSV アップロードで診断できます。結果はすぐに表示されます。
           </p>
         </div>
 
+        <div className="mb-6 flex rounded-xl border border-gray-200 bg-white p-1">
+          <button
+            type="button"
+            onClick={() => setActiveTab("manual")}
+            className={`flex-1 rounded-lg px-4 py-2.5 text-sm font-semibold transition ${
+              activeTab === "manual"
+                ? "bg-indigo-600 text-white"
+                : "text-gray-600 hover:bg-gray-50"
+            }`}
+          >
+            手動入力
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab("csv")}
+            className={`flex-1 rounded-lg px-4 py-2.5 text-sm font-semibold transition ${
+              activeTab === "csv"
+                ? "bg-indigo-600 text-white"
+                : "text-gray-600 hover:bg-gray-50"
+            }`}
+          >
+            CSVアップロード
+          </button>
+        </div>
+
+        {activeTab === "csv" ? (
+          <CsvUploadPanel />
+        ) : (
         <form
           onSubmit={handleSubmit}
           className="space-y-8 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8"
@@ -321,6 +353,7 @@ export default function DiagnosePage() {
             診断結果を見る
           </button>
         </form>
+        )}
       </main>
     </div>
   );

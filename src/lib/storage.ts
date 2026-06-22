@@ -1,4 +1,9 @@
-import { CostInput, ModelId } from "@/types";
+import {
+  CostInput,
+  CsvDiagnosisResult,
+  DiagnosisSession,
+  ModelId,
+} from "@/types";
 import { MODEL_OPTIONS, USE_CASE_OPTIONS } from "@/lib/pricing";
 
 export const DIAGNOSIS_STORAGE_KEY = "ai-cost-pilot-input";
@@ -50,12 +55,58 @@ export function isValidCostInput(value: unknown): value is CostInput {
   );
 }
 
-export function saveCostInput(input: CostInput): void {
-  if (typeof window === "undefined") return;
-  sessionStorage.setItem(DIAGNOSIS_STORAGE_KEY, JSON.stringify(input));
+function isValidCsvResult(value: unknown): value is CsvDiagnosisResult {
+  if (!value || typeof value !== "object") return false;
+  const result = value as Record<string, unknown>;
+  return (
+    typeof result.totalRequests === "number" &&
+    result.totalRequests > 0 &&
+    typeof result.totalCost === "number" &&
+    Array.isArray(result.costByModel)
+  );
 }
 
-export function loadCostInput(): CostInput | null {
+export function isValidDiagnosisSession(
+  value: unknown
+): value is DiagnosisSession {
+  if (!value || typeof value !== "object") return false;
+  const session = value as Record<string, unknown>;
+
+  if (session.mode === "manual") {
+    const useCase = normalizeUseCase(
+      (session.input as Record<string, unknown> | undefined)?.useCase
+    );
+    return isValidCostInput(session.input) && useCase !== null;
+  }
+
+  if (session.mode === "csv") {
+    return (
+      typeof session.projectName === "string" &&
+      session.projectName.trim().length > 0 &&
+      isValidCsvResult(session.result)
+    );
+  }
+
+  return false;
+}
+
+export function saveDiagnosis(session: DiagnosisSession): void {
+  if (typeof window === "undefined") return;
+  sessionStorage.setItem(DIAGNOSIS_STORAGE_KEY, JSON.stringify(session));
+}
+
+export function saveCostInput(input: CostInput): void {
+  saveDiagnosis({ mode: "manual", input });
+}
+
+export function saveCsvDiagnosis(
+  projectName: string,
+  result: CsvDiagnosisResult
+): void {
+  saveDiagnosis({ mode: "csv", projectName, result });
+}
+
+export function loadDiagnosis(): DiagnosisSession | null {
   if (typeof window === "undefined") return null;
 
   const raw = sessionStorage.getItem(DIAGNOSIS_STORAGE_KEY);
@@ -63,11 +114,36 @@ export function loadCostInput(): CostInput | null {
 
   try {
     const parsed = JSON.parse(raw) as Record<string, unknown>;
-    const useCase = normalizeUseCase(parsed.useCase);
-    if (!isValidCostInput(parsed) || !useCase) return null;
 
-    return { ...(parsed as CostInput), useCase };
+    if (parsed.mode === "csv") {
+      if (!isValidDiagnosisSession(parsed)) return null;
+      return parsed as DiagnosisSession;
+    }
+
+    if (parsed.mode === "manual") {
+      const useCase = normalizeUseCase(
+        (parsed.input as Record<string, unknown> | undefined)?.useCase
+      );
+      if (!isValidCostInput(parsed.input) || !useCase) return null;
+      return {
+        mode: "manual",
+        input: { ...(parsed.input as CostInput), useCase },
+      };
+    }
+
+    const useCase = normalizeUseCase(parsed.useCase);
+    if (isValidCostInput(parsed) && useCase) {
+      return { mode: "manual", input: { ...(parsed as CostInput), useCase } };
+    }
+
+    return null;
   } catch {
     return null;
   }
+}
+
+export function loadCostInput(): CostInput | null {
+  const session = loadDiagnosis();
+  if (session?.mode === "manual") return session.input;
+  return null;
 }

@@ -10,15 +10,26 @@ import {
   formatPercent,
   formatUsd,
 } from "@/lib/calculator";
+import {
+  csvResultToCostResult,
+  generateCsvExecutiveSummary,
+  generateCsvWasteInsights,
+  getCsvReportRecommendations,
+} from "@/lib/csv-calculator";
 import { MODEL_PRICING } from "@/lib/pricing";
 import {
   generateExecutiveSummary,
   generateWasteInsights,
   getReportRecommendations,
 } from "@/lib/report";
-import { loadCostInput } from "@/lib/storage";
+import { loadDiagnosis } from "@/lib/storage";
 import { FEEDBACK_FORM_URL } from "@/lib/links";
-import { CostInput, CostResult } from "@/types";
+import {
+  CostInput,
+  CostResult,
+  CsvDiagnosisResult,
+  DiagnosisSession,
+} from "@/types";
 
 function ReportSection({
   number,
@@ -88,23 +99,36 @@ function BreakdownRow({
 
 export default function ResultsPage() {
   const [isLoading, setIsLoading] = useState(true);
-  const [input, setInput] = useState<CostInput | null>(null);
-  const [result, setResult] = useState<CostResult | null>(null);
+  const [session, setSession] = useState<DiagnosisSession | null>(null);
   const [copySuccessMessage, setCopySuccessMessage] = useState<string | null>(
     null
   );
 
   useEffect(() => {
     try {
-      const saved = loadCostInput();
+      const saved = loadDiagnosis();
       if (saved) {
-        setInput(saved);
-        setResult(calculateCost(saved));
+        setSession(saved);
       }
     } finally {
       setIsLoading(false);
     }
   }, []);
+
+  const isCsv = session?.mode === "csv";
+  const manualInput: CostInput | null =
+    session?.mode === "manual" ? session.input : null;
+  const csvResult: CsvDiagnosisResult | null =
+    session?.mode === "csv" ? session.result : null;
+  const projectName =
+    session?.mode === "csv"
+      ? session.projectName
+      : manualInput?.projectName ?? "";
+  const result: CostResult | null = manualInput
+    ? calculateCost(manualInput)
+    : csvResult
+      ? csvResultToCostResult(csvResult)
+      : null;
 
   const reportDate = useMemo(
     () =>
@@ -116,21 +140,37 @@ export default function ResultsPage() {
     []
   );
 
-  const executiveSummary = useMemo(
-    () =>
-      input && result ? generateExecutiveSummary(input, result) : "",
-    [input, result]
-  );
+  const executiveSummary = useMemo(() => {
+    if (!result) return "";
+    if (isCsv && csvResult) {
+      return generateCsvExecutiveSummary(projectName, csvResult);
+    }
+    if (manualInput) {
+      return generateExecutiveSummary(manualInput, result);
+    }
+    return "";
+  }, [isCsv, csvResult, manualInput, projectName, result]);
 
-  const wasteInsights = useMemo(
-    () => (input && result ? generateWasteInsights(input, result) : []),
-    [input, result]
-  );
+  const wasteInsights = useMemo(() => {
+    if (!result) return [];
+    if (isCsv && csvResult) {
+      return generateCsvWasteInsights(csvResult);
+    }
+    if (manualInput) {
+      return generateWasteInsights(manualInput, result);
+    }
+    return [];
+  }, [isCsv, csvResult, manualInput, result]);
 
-  const recommendations = useMemo(
-    () => (input ? getReportRecommendations(input) : []),
-    [input]
-  );
+  const recommendations = useMemo(() => {
+    if (isCsv && csvResult) {
+      return getCsvReportRecommendations(csvResult);
+    }
+    if (manualInput) {
+      return getReportRecommendations(manualInput);
+    }
+    return [];
+  }, [isCsv, csvResult, manualInput]);
 
   const mainRecommendations = useMemo(
     () => recommendations.slice(0, 5),
@@ -138,17 +178,14 @@ export default function ResultsPage() {
   );
 
   const diagnosisSummaryText = useMemo(() => {
-    if (!input || !result) return "";
+    if (!result) return "";
 
-    const modelLabelLocal = MODEL_PRICING[input.model].label;
     const totalWasteCostLocal = result.failedWaste + result.retryWaste;
     const wasteRateText = formatPercent(result.totalWastePercentage);
-
     const savingsRateLocal =
       result.totalCost > 0
         ? (result.estimatedSavings / result.totalCost) * 100
         : 0;
-
     const savingsRateText = formatPercent(savingsRateLocal);
     const mainRecsText =
       mainRecommendations.length > 0
@@ -157,11 +194,48 @@ export default function ResultsPage() {
             .join("\n")
         : "- （推奨事項なし）";
 
+    if (isCsv && csvResult) {
+      const modelBreakdown = csvResult.costByModel
+        .map(
+          (m) =>
+            `  - ${m.modelLabel}: ${formatUsd(m.cost)} (${formatPercent(m.sharePercent)})`
+        )
+        .join("\n");
+
+      return [
+        "【診断サマリー — CSVアップロード診断】",
+        `プロジェクト名: ${projectName}`,
+        `総リクエスト数: ${csvResult.totalRequests.toLocaleString()}`,
+        `成功: ${csvResult.successfulRequests.toLocaleString()} / 失敗: ${csvResult.failedRequests.toLocaleString()}`,
+        `失敗率: ${formatPercent(csvResult.failureRate)}`,
+        `総入力トークン: ${csvResult.totalInputTokens.toLocaleString()}`,
+        `総出力トークン: ${csvResult.totalOutputTokens.toLocaleString()}`,
+        `平均レイテンシ: ${Math.round(csvResult.averageLatencyMs).toLocaleString()} ms`,
+        `推定コスト: ${formatUsd(result.totalCost)}`,
+        `基本コスト: ${formatUsd(result.baseCost)}`,
+        `失敗リクエスト無駄: ${formatUsd(result.failedWaste)}`,
+        `再試行無駄: ${formatUsd(result.retryWaste)}`,
+        `合計無駄コスト: ${formatUsd(totalWasteCostLocal)}`,
+        `無駄率: ${wasteRateText}`,
+        `推定削減額: ${formatUsd(result.estimatedSavings)}`,
+        `削減率: ${savingsRateText}`,
+        `最適化後コスト: ${formatUsd(result.optimizedCost)}`,
+        "モデル別コスト:",
+        modelBreakdown || "  - （データなし）",
+        "主な推奨事項:",
+        mainRecsText,
+      ].join("\n");
+    }
+
+    if (!manualInput) return "";
+
+    const modelLabelLocal = MODEL_PRICING[manualInput.model].label;
+
     return [
       "【診断サマリー】",
-      `プロジェクト名: ${input.projectName}`,
+      `プロジェクト名: ${manualInput.projectName}`,
       `選択モデル: ${modelLabelLocal}`,
-      `ユースケース: ${input.useCase}`,
+      `ユースケース: ${manualInput.useCase}`,
       `推定月次コスト: ${formatUsd(result.totalCost)}`,
       `基本コスト: ${formatUsd(result.baseCost)}`,
       `失敗リクエスト無駄: ${formatUsd(result.failedWaste)}`,
@@ -174,7 +248,14 @@ export default function ResultsPage() {
       "主な推奨事項:",
       mainRecsText,
     ].join("\n");
-  }, [input, result, mainRecommendations]);
+  }, [
+    isCsv,
+    csvResult,
+    manualInput,
+    projectName,
+    result,
+    mainRecommendations,
+  ]);
 
   if (isLoading) {
     return (
@@ -187,7 +268,7 @@ export default function ResultsPage() {
     );
   }
 
-  if (!input || !result) {
+  if (!session || !result) {
     return (
       <div className="min-h-screen bg-gray-50">
         <Header />
@@ -206,7 +287,9 @@ export default function ResultsPage() {
     );
   }
 
-  const modelLabel = MODEL_PRICING[input.model].label;
+  const modelLabel = manualInput
+    ? MODEL_PRICING[manualInput.model].label
+    : csvResult?.costByModel[0]?.modelLabel ?? "複数モデル";
   const { totalCost, baseCost, retryWaste, failedWaste, optimizedCost } =
     result;
   const totalWasteCost = failedWaste + retryWaste;
@@ -261,20 +344,39 @@ export default function ResultsPage() {
                 AI Cost Diagnosis Report
               </p>
               <h1 className="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl">
-                {input.projectName}
+                {projectName}
               </h1>
               <p className="mt-2 text-sm text-gray-500">診断日: {reportDate}</p>
               <div className="mt-4 flex flex-wrap gap-2">
+                {isCsv && (
+                  <span className="rounded-full bg-indigo-100 px-3 py-1 text-xs font-medium text-indigo-700">
+                    CSVアップロード診断
+                  </span>
+                )}
                 <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">
                   {modelLabel}
                 </span>
-                <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">
-                  {input.useCase}
-                </span>
-                <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">
-                  月間 {input.monthlyRequests.toLocaleString()} req
-                </span>
+                {manualInput && (
+                  <>
+                    <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">
+                      {manualInput.useCase}
+                    </span>
+                    <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">
+                      月間 {manualInput.monthlyRequests.toLocaleString()} req
+                    </span>
+                  </>
+                )}
+                {isCsv && csvResult && (
+                  <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">
+                    総 {csvResult.totalRequests.toLocaleString()} req
+                  </span>
+                )}
               </div>
+              {isCsv && csvResult?.hasUnknownModels && (
+                <p className="mt-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
+                  一部のモデル料金が未登録のため、正確に計算できません。
+                </p>
+              )}
             </div>
             <div className="flex shrink-0 flex-col gap-2 sm:items-end print:hidden">
               <button
@@ -297,9 +399,9 @@ export default function ResultsPage() {
         {/* KPI Strip */}
         <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <StatCard
-            label="現行月次コスト"
+            label={isCsv ? "推定コスト" : "現行月次コスト"}
             value={formatUsd(totalCost)}
-            subtext="Current Monthly Cost"
+            subtext={isCsv ? "CSV Log Analysis" : "Current Monthly Cost"}
           />
           <StatCard
             label="推定無駄コスト"
@@ -469,6 +571,126 @@ export default function ResultsPage() {
               ))}
             </ol>
           </ReportSection>
+
+          {isCsv && csvResult && (
+            <>
+              <ReportSection
+                number="05"
+                title="リクエスト分析"
+                subtitle="Request Analysis"
+              >
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <MetricRow
+                    label="総リクエスト数"
+                    value={csvResult.totalRequests.toLocaleString()}
+                  />
+                  <MetricRow
+                    label="成功リクエスト数"
+                    value={csvResult.successfulRequests.toLocaleString()}
+                  />
+                  <MetricRow
+                    label="失敗リクエスト数"
+                    value={csvResult.failedRequests.toLocaleString()}
+                    accent="danger"
+                  />
+                  <MetricRow
+                    label="失敗率"
+                    value={formatPercent(csvResult.failureRate)}
+                    accent="danger"
+                  />
+                </div>
+              </ReportSection>
+
+              <ReportSection
+                number="06"
+                title="トークン分析"
+                subtitle="Token Analysis"
+              >
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <MetricRow
+                    label="総入力トークン"
+                    value={csvResult.totalInputTokens.toLocaleString()}
+                  />
+                  <MetricRow
+                    label="総出力トークン"
+                    value={csvResult.totalOutputTokens.toLocaleString()}
+                  />
+                  <MetricRow
+                    label="平均入力トークン"
+                    value={Math.round(csvResult.averageInputTokens).toLocaleString()}
+                  />
+                  <MetricRow
+                    label="平均出力トークン"
+                    value={Math.round(csvResult.averageOutputTokens).toLocaleString()}
+                  />
+                </div>
+              </ReportSection>
+
+              <ReportSection
+                number="07"
+                title="モデル別コスト"
+                subtitle="Cost by Model"
+              >
+                <div className="space-y-3">
+                  {csvResult.costByModel.map((entry) => (
+                    <div
+                      key={entry.modelLabel}
+                      className="rounded-xl border border-gray-100 bg-gray-50 p-4"
+                    >
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <div>
+                          <p className="font-semibold text-gray-900">
+                            {entry.modelLabel}
+                          </p>
+                          <p className="mt-1 text-sm text-gray-500">
+                            {entry.requestCount.toLocaleString()} リクエスト
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-lg font-bold text-gray-900">
+                            {formatUsd(entry.cost)}
+                          </p>
+                          <p className="text-sm text-gray-500">
+                            構成比 {formatPercent(entry.sharePercent)}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="mt-3">
+                        <ProgressBar
+                          label={entry.modelLabel}
+                          amount={formatUsd(entry.cost)}
+                          percentage={entry.sharePercent}
+                          color="indigo"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </ReportSection>
+
+              <ReportSection
+                number="08"
+                title="パフォーマンス"
+                subtitle="Performance"
+              >
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <MetricRow
+                    label="平均レイテンシ"
+                    value={`${Math.round(csvResult.averageLatencyMs).toLocaleString()} ms`}
+                  />
+                  <MetricRow
+                    label="総再試行回数"
+                    value={csvResult.totalRetries.toLocaleString()}
+                    accent="danger"
+                  />
+                  <MetricRow
+                    label="平均再試行回数"
+                    value={csvResult.averageRetries.toFixed(1)}
+                  />
+                </div>
+              </ReportSection>
+            </>
+          )}
         </div>
 
         {/* Appendix: Request Stats */}
@@ -480,18 +702,18 @@ export default function ResultsPage() {
             <StatCard
               label="成功リクエスト"
               value={Math.round(result.successCount).toLocaleString()}
-              subtext="件 / 月"
+              subtext={isCsv ? "件" : "件 / 月"}
             />
             <StatCard
               label="失敗リクエスト"
               value={Math.round(result.failedRequestCount).toLocaleString()}
-              subtext="件 / 月"
+              subtext={isCsv ? "件" : "件 / 月"}
               accent="danger"
             />
             <StatCard
               label="再試行回数"
               value={Math.round(result.retryCount).toLocaleString()}
-              subtext="件 / 月"
+              subtext={isCsv ? "件" : "件 / 月"}
               accent="danger"
             />
           </div>

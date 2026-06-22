@@ -45,3 +45,38 @@ export const USE_CASE_OPTIONS = [
   "社内ナレッジ検索",
   "その他",
 ] as const;
+
+const MODEL_ALIASES: Record<string, ModelId> = {
+  "gpt-4.1": "gpt-4.1",
+  "gpt-4.1（openai）": "gpt-4.1",
+  "gpt-4.1 mini": "gpt-4.1-mini",
+  "gpt-4.1-mini": "gpt-4.1-mini",
+  "gpt-4.1 ミニ": "gpt-4.1-mini",
+  "gpt-4.1 ミニ（openai）": "gpt-4.1-mini",
+  "claude sonnet": "claude-sonnet",
+  "claude-sonnet": "claude-sonnet",
+  "claude sonnet（anthropic）": "claude-sonnet",
+  "gemini 1.5 pro": "gemini-1.5-pro",
+  "gemini-1.5-pro": "gemini-1.5-pro",
+  "gemini 1.5 pro（google）": "gemini-1.5-pro",
+  "deepseek chat": "deepseek-chat",
+  "deepseek-chat": "deepseek-chat",
+  "deepseek chat（deepseek）": "deepseek-chat",
+};
+
+export function resolveModelId(rawModel: string): ModelId | null {
+  const normalized = rawModel.trim().toLowerCase();
+  if (MODEL_ALIASES[normalized]) {
+    return MODEL_ALIASES[normalized];
+  }
+
+  const byLabel = MODEL_OPTIONS.find(
+    (option) => option.label.toLowerCase() === normalized
+  );
+  if (byLabel) return byLabel.value;
+
+  const byPricing = (Object.entries(MODEL_PRICING) as [ModelId, ModelPricing][]).find(
+    ([, pricing]) => pricing.label.toLowerCase() === normalized
+  );
+  return byPricing ? byPricing[0] : null;
+}
