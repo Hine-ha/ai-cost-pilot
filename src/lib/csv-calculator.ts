@@ -276,7 +276,7 @@ export function generateCsvWasteInsights(result: CsvDiagnosisResult) {
     insights.push({
       factor: "再試行",
       impact: formatUsd(result.retryWaste),
-      detail: `合計 ${result.totalRetries.toLocaleString()} 回の再試行により、追加 API コストが発生しています（平均 ${result.averageRetries.toFixed(1)} 回 / 失敗リクエスト）。`,
+      detail: `合計 ${result.totalRetries.toLocaleString()} 回の再試行により、再試行追加コストが発生しています（平均 ${result.averageRetries.toFixed(1)} 回 / 失敗リクエスト）。`,
     });
   }
 

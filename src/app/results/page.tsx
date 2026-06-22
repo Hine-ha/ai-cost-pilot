@@ -214,7 +214,7 @@ export default function ResultsPage() {
         `推定コスト: ${formatUsd(result.totalCost)}`,
         `基本コスト: ${formatUsd(result.baseCost)}`,
         `失敗リクエスト無駄: ${formatUsd(result.failedWaste)}`,
-        `再試行無駄: ${formatUsd(result.retryWaste)}`,
+        `再試行追加コスト: ${formatUsd(result.retryWaste)}`,
         `合計無駄コスト: ${formatUsd(totalWasteCostLocal)}`,
         `無駄率: ${wasteRateText}`,
         `推定削減額: ${formatUsd(result.estimatedSavings)}`,
@@ -239,7 +239,7 @@ export default function ResultsPage() {
       `推定月次コスト: ${formatUsd(result.totalCost)}`,
       `基本コスト: ${formatUsd(result.baseCost)}`,
       `失敗リクエスト無駄: ${formatUsd(result.failedWaste)}`,
-      `再試行無駄: ${formatUsd(result.retryWaste)}`,
+      `再試行追加コスト: ${formatUsd(result.retryWaste)}`,
       `合計無駄コスト: ${formatUsd(totalWasteCostLocal)}`,
       `無駄率: ${wasteRateText}`,
       `推定削減額: ${formatUsd(result.estimatedSavings)}`,
@@ -467,20 +467,25 @@ export default function ResultsPage() {
               label="基本コスト"
               amount={formatUsd(baseCost)}
               percentage={`構成比 ${formatPercent(baseCostShare)}`}
-              note="正常リクエストに対する API 利用料"
+              note="全リクエストの初回 API 利用料（成功・失敗を含む）"
             />
             <BreakdownRow
               label="失敗リクエスト無駄"
               amount={formatUsd(failedWaste)}
-              note="失敗した呼び出しに起因する分析上の無駄コスト"
+              note="基本コストのうち失敗リクエストに費やした分。分析上の無駄指標であり、合計コストへの二重加算はありません"
               accent="danger"
             />
             <BreakdownRow
-              label="再試行無駄"
+              label="再試行追加コスト"
               amount={formatUsd(retryWaste)}
               percentage={`構成比 ${formatPercent(retryCostShare)}`}
-              note="再試行による追加 API コスト（月次コストに加算）"
+              note="再試行による追加 API コスト（初回呼び出しに加算）"
               accent="danger"
+            />
+            <BreakdownRow
+              label={isCsv ? "推定コスト" : "現行月次コスト"}
+              amount={formatUsd(totalCost)}
+              note="基本コスト + 再試行追加コスト"
             />
             <BreakdownRow
               label="最適化後コスト"
@@ -492,7 +497,10 @@ export default function ResultsPage() {
 
             <div className="mt-6 rounded-xl border border-gray-100 bg-gray-50 p-5">
               <p className="mb-4 text-sm font-medium text-gray-700">
-                月次コスト構成（合計 100%）
+                {isCsv ? "推定コスト構成（合計 100%）" : "月次コスト構成（合計 100%）"}
+              </p>
+              <p className="mb-4 text-xs leading-relaxed text-gray-500">
+                失敗リクエスト無駄は基本コストに含まれるため、下記の構成比には含めていません。
               </p>
               <div className="space-y-4">
                 <ProgressBar
@@ -502,7 +510,7 @@ export default function ResultsPage() {
                   color="indigo"
                 />
                 <ProgressBar
-                  label="再試行コスト"
+                  label="再試行追加コスト"
                   amount={formatUsd(retryWaste)}
                   percentage={retryCostShare}
                   color="amber"
@@ -524,6 +532,9 @@ export default function ResultsPage() {
                 value={formatPercent(result.totalWastePercentage)}
               />
             </div>
+            <p className="mb-5 rounded-lg border border-gray-100 bg-gray-50 px-4 py-3 text-xs leading-relaxed text-gray-600">
+              失敗リクエスト無駄は基本コストに含まれる分析指標であり、月次コストに二重加算されません。
+            </p>
             <div className="space-y-4">
               {wasteInsights.map((insight) => (
                 <div

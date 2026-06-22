@@ -56,7 +56,7 @@ export function generateWasteInsights(
     insights.push({
       factor: "再試行",
       impact: formatUsd(result.retryWaste),
-      detail: `平均 ${input.averageRetries} 回の再試行により、追加 API 呼び出しが ${Math.round(result.retryCount).toLocaleString()} 件発生。再試行コストは月次コストに直接加算されます。`,
+      detail: `平均 ${input.averageRetries} 回の再試行により、追加 API 呼び出しが ${Math.round(result.retryCount).toLocaleString()} 件発生。再試行追加コストは合計コスト（基本コスト + 再試行追加コスト）に加算されます。`,
     });
   }
 
