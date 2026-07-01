@@ -17,9 +17,9 @@ const messages = {
     copy: "复制",
     copied: "已复制",
     codeStep1:
-      'pip3 install "git+https://github.com/Hine-ha/tokenlens-.git#subdirectory=aicostpilot"',
+      'pip3 install "git+https://github.com/Hine-ha/tokenlens-.git#subdirectory=tokenlens"',
     codeStep2: `import anthropic
-from aicostpilot import track
+from tokenlens import track
 
 client = track(
     anthropic.Anthropic(),
@@ -55,9 +55,9 @@ response = client.messages.create(
     copy: "コピー",
     copied: "コピーしました",
     codeStep1:
-      'pip3 install "git+https://github.com/Hine-ha/tokenlens-.git#subdirectory=aicostpilot"',
+      'pip3 install "git+https://github.com/Hine-ha/tokenlens-.git#subdirectory=tokenlens"',
     codeStep2: `import anthropic
-from aicostpilot import track
+from tokenlens import track
 
 client = track(
     anthropic.Anthropic(),

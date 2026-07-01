@@ -93,7 +93,7 @@ export function downloadSampleCsv(): void {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = "ai-cost-pilot-sample.csv";
+  link.download = "tokenlens-sample.csv";
   link.click();
   URL.revokeObjectURL(url);
 }

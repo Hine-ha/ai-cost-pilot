@@ -6,7 +6,7 @@ import {
 } from "@/types";
 import { MODEL_OPTIONS, USE_CASE_OPTIONS } from "@/lib/pricing";
 
-export const DIAGNOSIS_STORAGE_KEY = "ai-cost-pilot-input";
+export const DIAGNOSIS_STORAGE_KEY = "tokenlens-input";
 
 const MODEL_IDS = new Set(MODEL_OPTIONS.map((option) => option.value));
 const USE_CASES = new Set<string>(USE_CASE_OPTIONS);
