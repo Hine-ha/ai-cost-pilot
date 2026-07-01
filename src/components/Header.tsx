@@ -33,6 +33,7 @@ export default function Header() {
             height={36}
             className="rounded-lg shadow-sm"
             priority
+            unoptimized
           />
           <span className="font-serif text-lg font-semibold tracking-tight text-slate-900">
             TokenLens
