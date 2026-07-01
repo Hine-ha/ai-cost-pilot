@@ -746,7 +746,7 @@ export default function ResultsPage() {
               PDFレポートを出力
             </button>
             <a
-              href="mailto:hello@aicostpilot.com?subject=TokenLens%20無料相談の予約"
+              href="mailto:hello@tokenlens.com?subject=TokenLens%20無料相談の予約"
               className="inline-flex w-full items-center justify-center rounded-xl border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-800 transition hover:bg-gray-50 sm:w-auto"
             >
               無料相談を予約する
