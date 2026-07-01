@@ -2,19 +2,19 @@ interface ProgressBarProps {
   label: string;
   amount?: string;
   percentage: number;
-  color?: "indigo" | "red" | "emerald" | "amber";
+  color?: "sky" | "red" | "emerald" | "amber";
 }
 
 export default function ProgressBar({
   label,
   amount,
   percentage,
-  color = "indigo",
+  color = "sky",
 }: ProgressBarProps) {
   const clampedPercentage = Math.min(Math.max(percentage, 0), 100);
 
   const barColor = {
-    indigo: "bg-indigo-600",
+    sky: "bg-sky-700",
     red: "bg-red-500",
     emerald: "bg-emerald-500",
     amber: "bg-amber-500",

@@ -1,21 +1,23 @@
+import type { ComponentType, SVGProps } from "react";
+
 interface FeatureCardProps {
   title: string;
   description: string;
-  icon: string;
+  icon: ComponentType<SVGProps<SVGSVGElement>>;
 }
 
 export default function FeatureCard({
   title,
   description,
-  icon,
+  icon: Icon,
 }: FeatureCardProps) {
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition hover:shadow-md">
-      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 text-2xl">
-        {icon}
+    <div className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-lg">
+      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-slate-900 text-white transition-colors duration-200 group-hover:bg-sky-700">
+        <Icon className="h-6 w-6" aria-hidden="true" />
       </div>
-      <h3 className="mb-2 text-lg font-semibold text-gray-900">{title}</h3>
-      <p className="text-sm leading-relaxed text-gray-600">{description}</p>
+      <h3 className="mb-2 text-lg font-semibold text-slate-900">{title}</h3>
+      <p className="text-sm leading-relaxed text-slate-600">{description}</p>
     </div>
   );
 }

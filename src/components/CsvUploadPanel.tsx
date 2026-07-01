@@ -79,15 +79,15 @@ export default function CsvUploadPanel() {
         </p>
         <ul className="mt-3 space-y-1.5 text-sm text-gray-700">
           <li className="flex gap-2">
-            <span className="text-indigo-500">•</span>
+            <span className="text-sky-600">•</span>
             <span>自社アプリケーションのAPI利用ログ</span>
           </li>
           <li className="flex gap-2">
-            <span className="text-indigo-500">•</span>
+            <span className="text-sky-600">•</span>
             <span>Langfuse / LiteLLM / Helicone などのLLM監視ツール</span>
           </li>
           <li className="flex gap-2">
-            <span className="text-indigo-500">•</span>
+            <span className="text-sky-600">•</span>
             <span>Google Cloud Billing / Vertex AI などのクラウド利用データ</span>
           </li>
         </ul>
@@ -109,14 +109,14 @@ export default function CsvUploadPanel() {
           value={projectName}
           onChange={(e) => setProjectName(e.target.value)}
           placeholder="例: カスタマーサポート API ログ"
-          className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+          className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 outline-none transition focus:border-sky-600 focus:ring-2 focus:ring-sky-100"
         />
       </div>
 
       <div
         onDragOver={(e) => e.preventDefault()}
         onDrop={onDrop}
-        className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 px-6 py-10 text-center transition hover:border-indigo-400 hover:bg-indigo-50/30"
+        className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 px-6 py-10 text-center transition hover:border-sky-500 hover:bg-sky-50/30"
       >
         <input
           ref={fileInputRef}
@@ -133,7 +133,7 @@ export default function CsvUploadPanel() {
           type="button"
           onClick={() => fileInputRef.current?.click()}
           disabled={isProcessing}
-          className="mt-4 rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700 disabled:opacity-60"
+          className="mt-4 rounded-xl bg-sky-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-sky-800 disabled:opacity-60"
         >
           {isProcessing ? "解析中..." : "ファイルを選択"}
         </button>

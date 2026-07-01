@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
 import Header from "@/components/Header";
 import ProgressBar from "@/components/ProgressBar";
@@ -40,13 +40,13 @@ function ReportSection({
   number: string;
   title: string;
   subtitle?: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <section className="report-section rounded-2xl border border-gray-200 bg-white shadow-sm print:rounded-none print:shadow-none">
       <div className="border-b border-gray-100 px-6 py-5">
         <div className="flex items-center gap-3">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 text-sm font-bold text-white">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-sky-700 text-sm font-bold text-white">
             {number}
           </span>
           <div>
@@ -278,7 +278,7 @@ export default function ResultsPage() {
           </p>
           <Link
             href="/diagnose"
-            className="mt-6 inline-flex items-center rounded-xl bg-indigo-600 px-6 py-3 font-semibold text-white transition hover:bg-indigo-700"
+            className="mt-6 inline-flex items-center rounded-xl bg-sky-700 px-6 py-3 font-semibold text-white transition hover:bg-sky-800"
           >
             診断を始める
           </Link>
@@ -340,16 +340,16 @@ export default function ResultsPage() {
         <div className="report-section mb-8 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8 print:shadow-none">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <p className="text-sm font-medium uppercase tracking-wider text-indigo-600">
+              <p className="text-sm font-medium uppercase tracking-wider text-sky-700">
                 AI Cost Diagnosis Report
               </p>
-              <h1 className="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl">
+              <h1 className="mt-2 font-serif text-2xl font-bold text-gray-900 sm:text-3xl">
                 {projectName}
               </h1>
               <p className="mt-2 text-sm text-gray-500">診断日: {reportDate}</p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {isCsv && (
-                  <span className="rounded-full bg-indigo-100 px-3 py-1 text-xs font-medium text-indigo-700">
+                  <span className="rounded-full bg-sky-100 px-3 py-1 text-xs font-medium text-sky-800">
                     CSVアップロード診断
                   </span>
                 )}
@@ -382,7 +382,7 @@ export default function ResultsPage() {
               <button
                 type="button"
                 onClick={() => window.print()}
-                className="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700"
+                className="inline-flex items-center justify-center rounded-xl bg-sky-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-sky-800"
               >
                 PDFレポートを出力
               </button>
@@ -430,7 +430,7 @@ export default function ResultsPage() {
             title="エグゼクティブサマリー"
             subtitle="Executive Summary"
           >
-            <div className="rounded-xl border border-indigo-100 bg-indigo-50/60 p-5">
+            <div className="rounded-xl border border-sky-100 bg-sky-50/60 p-5">
               <p className="leading-relaxed text-gray-800">
                 {executiveSummary}
               </p>
@@ -507,7 +507,7 @@ export default function ResultsPage() {
                   label="基本コスト"
                   amount={formatUsd(baseCost)}
                   percentage={baseCostShare}
-                  color="indigo"
+                  color="sky"
                 />
                 <ProgressBar
                   label="再試行追加コスト"
@@ -569,7 +569,7 @@ export default function ResultsPage() {
                   key={rec.title}
                   className="flex gap-4 rounded-xl border border-gray-100 bg-gray-50 p-4"
                 >
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-indigo-600 text-xs font-bold text-white">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-sky-700 text-xs font-bold text-white">
                     {index + 1}
                   </span>
                   <div>
@@ -671,7 +671,7 @@ export default function ResultsPage() {
                           label={entry.modelLabel}
                           amount={formatUsd(entry.cost)}
                           percentage={entry.sharePercent}
-                          color="indigo"
+                          color="sky"
                         />
                       </div>
                     </div>
@@ -730,7 +730,7 @@ export default function ResultsPage() {
           </div>
         </div>
 
-        <div className="report-section mt-10 rounded-2xl border border-indigo-100 bg-gradient-to-br from-indigo-50 to-white p-8 text-center shadow-sm print:hidden">
+        <div className="report-section mt-10 rounded-2xl border border-sky-100 bg-gradient-to-br from-sky-50 to-white p-8 text-center shadow-sm print:hidden">
           <h2 className="text-xl font-bold text-gray-900">
             次のステップ
           </h2>
@@ -741,7 +741,7 @@ export default function ResultsPage() {
             <button
               type="button"
               onClick={() => window.print()}
-              className="inline-flex w-full items-center justify-center rounded-xl bg-indigo-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-indigo-700 sm:w-auto"
+              className="inline-flex w-full items-center justify-center rounded-xl bg-sky-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-sky-800 sm:w-auto"
             >
               PDFレポートを出力
             </button>
@@ -780,7 +780,7 @@ export default function ResultsPage() {
                 <button
                   type="button"
                   onClick={copyDiagnosisSummary}
-                  className="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700"
+                  className="inline-flex items-center justify-center rounded-xl bg-sky-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-sky-800"
                 >
                   診断サマリーをコピー
                 </button>
@@ -803,7 +803,7 @@ export default function ResultsPage() {
                 href={FEEDBACK_FORM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex w-full items-center justify-center rounded-xl bg-indigo-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-indigo-700 print:hidden"
+                className="inline-flex w-full items-center justify-center rounded-xl bg-sky-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-sky-800 print:hidden"
               >
                 詳細診断を依頼する / フィードバックを送る
               </a>

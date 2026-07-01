@@ -48,7 +48,9 @@ export default function DiagnosePage() {
 
       <main className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">コスト診断入力</h1>
+          <h1 className="font-serif text-3xl font-bold text-gray-900">
+            コスト診断入力
+          </h1>
           <p className="mt-2 text-gray-600">
             手動入力または CSV アップロードで診断できます。結果はすぐに表示されます。
           </p>
@@ -60,7 +62,7 @@ export default function DiagnosePage() {
             onClick={() => setActiveTab("manual")}
             className={`flex-1 rounded-lg px-4 py-2.5 text-sm font-semibold transition ${
               activeTab === "manual"
-                ? "bg-indigo-600 text-white"
+                ? "bg-sky-700 text-white"
                 : "text-gray-600 hover:bg-gray-50"
             }`}
           >
@@ -71,7 +73,7 @@ export default function DiagnosePage() {
             onClick={() => setActiveTab("csv")}
             className={`flex-1 rounded-lg px-4 py-2.5 text-sm font-semibold transition ${
               activeTab === "csv"
-                ? "bg-indigo-600 text-white"
+                ? "bg-sky-700 text-white"
                 : "text-gray-600 hover:bg-gray-50"
             }`}
           >
@@ -107,7 +109,7 @@ export default function DiagnosePage() {
                   setForm((prev) => ({ ...prev, projectName: e.target.value }))
                 }
                 placeholder="例: カスタマーサポートボット"
-                className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+                className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 outline-none transition focus:border-sky-600 focus:ring-2 focus:ring-sky-100"
               />
             </div>
 
@@ -128,7 +130,7 @@ export default function DiagnosePage() {
                       model: e.target.value as ModelId,
                     }))
                   }
-                  className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+                  className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 outline-none transition focus:border-sky-600 focus:ring-2 focus:ring-sky-100"
                 >
                   {MODEL_OPTIONS.map((option) => (
                     <option key={option.value} value={option.value}>
@@ -154,7 +156,7 @@ export default function DiagnosePage() {
                       useCase: e.target.value as UseCase,
                     }))
                   }
-                  className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+                  className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 outline-none transition focus:border-sky-600 focus:ring-2 focus:ring-sky-100"
                 >
                   {USE_CASE_OPTIONS.map((option) => (
                     <option key={option} value={option}>
@@ -188,7 +190,7 @@ export default function DiagnosePage() {
                   onChange={(e) =>
                     updateNumber("monthlyRequests", e.target.value)
                   }
-                  className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+                  className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 outline-none transition focus:border-sky-600 focus:ring-2 focus:ring-sky-100"
                 />
               </div>
 
@@ -208,7 +210,7 @@ export default function DiagnosePage() {
                   required
                   value={form.failureRate}
                   onChange={(e) => updateNumber("failureRate", e.target.value)}
-                  className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+                  className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 outline-none transition focus:border-sky-600 focus:ring-2 focus:ring-sky-100"
                 />
               </div>
 
@@ -228,7 +230,7 @@ export default function DiagnosePage() {
                   onChange={(e) =>
                     updateNumber("averageInputTokens", e.target.value)
                   }
-                  className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+                  className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 outline-none transition focus:border-sky-600 focus:ring-2 focus:ring-sky-100"
                 />
               </div>
 
@@ -248,7 +250,7 @@ export default function DiagnosePage() {
                   onChange={(e) =>
                     updateNumber("averageOutputTokens", e.target.value)
                   }
-                  className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+                  className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 outline-none transition focus:border-sky-600 focus:ring-2 focus:ring-sky-100"
                 />
               </div>
 
@@ -269,7 +271,7 @@ export default function DiagnosePage() {
                   onChange={(e) =>
                     updateNumber("averageRetries", e.target.value)
                   }
-                  className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+                  className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 outline-none transition focus:border-sky-600 focus:ring-2 focus:ring-sky-100"
                 />
               </div>
             </div>
@@ -291,7 +293,7 @@ export default function DiagnosePage() {
                       hasCache: e.target.checked,
                     }))
                   }
-                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  className="h-4 w-4 rounded border-gray-300 text-sky-700 focus:ring-sky-600"
                 />
                 <div>
                   <span className="font-medium text-gray-900">
@@ -310,7 +312,7 @@ export default function DiagnosePage() {
                   onChange={(e) =>
                     setForm((prev) => ({ ...prev, hasRag: e.target.checked }))
                   }
-                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  className="h-4 w-4 rounded border-gray-300 text-sky-700 focus:ring-sky-600"
                 />
                 <div>
                   <span className="font-medium text-gray-900">
@@ -332,7 +334,7 @@ export default function DiagnosePage() {
                       hasAgent: e.target.checked,
                     }))
                   }
-                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  className="h-4 w-4 rounded border-gray-300 text-sky-700 focus:ring-sky-600"
                 />
                 <div>
                   <span className="font-medium text-gray-900">
@@ -348,7 +350,7 @@ export default function DiagnosePage() {
 
           <button
             type="submit"
-            className="w-full rounded-xl bg-indigo-600 py-3.5 text-base font-semibold text-white transition hover:bg-indigo-700"
+            className="w-full rounded-xl bg-sky-700 py-3.5 text-base font-semibold text-white transition hover:bg-sky-800"
           >
             診断結果を見る
           </button>

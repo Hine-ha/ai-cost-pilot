@@ -10,14 +10,20 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: [
+          "Noto Sans JP",
           "Hiragino Sans",
           "Hiragino Kaku Gothic ProN",
-          "Noto Sans JP",
           "Yu Gothic",
           "Meiryo",
           "system-ui",
           "-apple-system",
           "sans-serif",
+        ],
+        serif: [
+          "Noto Serif JP",
+          "Hiragino Mincho ProN",
+          "Yu Mincho",
+          "serif",
         ],
       },
     },
