@@ -16,7 +16,8 @@ const messages = {
     feedback: "反馈",
     copy: "复制",
     copied: "已复制",
-    codeStep1: "pip install aicostpilot",
+    codeStep1:
+      'pip3 install "git+https://github.com/Hine-ha/tokenlens-.git#subdirectory=aicostpilot"',
     codeStep2: `import anthropic
 from aicostpilot import track
 
@@ -53,7 +54,8 @@ response = client.messages.create(
     feedback: "フィードバック",
     copy: "コピー",
     copied: "コピーしました",
-    codeStep1: "pip install aicostpilot",
+    codeStep1:
+      'pip3 install "git+https://github.com/Hine-ha/tokenlens-.git#subdirectory=aicostpilot"',
     codeStep2: `import anthropic
 from aicostpilot import track
 
