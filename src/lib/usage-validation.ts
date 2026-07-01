@@ -46,6 +46,10 @@ export function parseTrackUsagePayload(
     return { ok: false, error: "timestamp must be a valid ISO date string." };
   }
 
+  const user_id = isNonEmptyString(payload.user_id)
+    ? payload.user_id.trim()
+    : undefined;
+
   return {
     ok: true,
     data: {
@@ -55,6 +59,7 @@ export function parseTrackUsagePayload(
       output_tokens: payload.output_tokens,
       cost: payload.cost,
       timestamp: new Date(payload.timestamp).toISOString(),
+      ...(user_id && { user_id }),
       ...(isNonEmptyString(payload.status) && {
         status: payload.status.trim().toLowerCase(),
       }),

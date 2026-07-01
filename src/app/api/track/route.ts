@@ -1,19 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
 import { parseTrackUsagePayload } from "@/lib/usage-validation";
 
 export const dynamic = "force-dynamic";
 
+function verifyApiKey(request: NextRequest): boolean {
+  const expected = process.env.TOKENLENS_API_KEY?.trim();
+  if (!expected) return false;
+  const provided = request.headers.get("x-api-key")?.trim();
+  return provided === expected;
+}
+
 export async function POST(request: NextRequest) {
   try {
-    const { userId } = auth();
-
-    if (!userId) {
+    if (!process.env.TOKENLENS_API_KEY?.trim()) {
       return NextResponse.json(
-        { error: "Unauthorized. Sign in or pass a valid Clerk session." },
-        { status: 401 }
+        { error: "Server misconfigured: TOKENLENS_API_KEY is not set." },
+        { status: 503 }
       );
+    }
+
+    if (!verifyApiKey(request)) {
+      return NextResponse.json({ error: "Invalid or missing x-api-key." }, { status: 401 });
     }
 
     let body: unknown;
@@ -35,7 +43,7 @@ export async function POST(request: NextRequest) {
     const supabase = getSupabaseAdmin();
     const { data, error } = await supabase
       .from("usage_events")
-      .insert({ ...parsed.data, user_id: userId })
+      .insert(parsed.data)
       .select(
         "id, project_name, model, input_tokens, output_tokens, cost, timestamp, user_id, created_at"
       )

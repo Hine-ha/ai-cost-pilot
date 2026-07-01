@@ -26,6 +26,12 @@ const messages = {
     emptyTable: "暂无模型用量数据",
     projectFilter: "项目筛选",
     allProjects: "全部项目",
+    sdkConfigTitle: "SDK 配置",
+    sdkConfigDesc: "在 Python SDK 中传入 user_id，上报数据会关联到你的账号。",
+    userIdLabel: "你的 user_id",
+    copy: "复制",
+    copied: "已复制",
+    sdkExample: "示例：track(client, project=\"my-app\", user_id=\"…\")",
   },
   ja: {
     title: "利用量ダッシュボード",
@@ -52,6 +58,12 @@ const messages = {
     emptyTable: "モデル別データがありません",
     projectFilter: "プロジェクト",
     allProjects: "すべて",
+    sdkConfigTitle: "SDK 設定",
+    sdkConfigDesc: "Python SDK に user_id を渡すと、データがあなたのアカウントに紐づきます。",
+    userIdLabel: "あなたの user_id",
+    copy: "コピー",
+    copied: "コピーしました",
+    sdkExample: "例：track(client, project=\"my-app\", user_id=\"…\")",
   },
 } as const;
 

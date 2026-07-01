@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import Header from "@/components/Header";
 import StatCard from "@/components/StatCard";
 import DashboardSkeleton from "@/components/dashboard/DashboardSkeleton";
+import SdkConfigPanel from "@/components/dashboard/SdkConfigPanel";
 import {
   formatPercent,
   formatUsdAdaptive,
@@ -201,6 +202,8 @@ export default function DashboardPage() {
             <LanguageSwitcher locale={locale} onChange={setLocale} />
           </div>
         </div>
+
+        <SdkConfigPanel t={t} />
 
         {isLoading && <DashboardSkeleton />}
 
