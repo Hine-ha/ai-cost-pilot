@@ -3,6 +3,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import {
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 import { FEEDBACK_FORM_URL } from "@/lib/links";
 
 function navLinkClass(isActive: boolean, hiddenOnMobile = false) {
@@ -39,7 +46,7 @@ export default function Header() {
             TokenLens
           </span>
         </Link>
-        <nav className="flex items-center gap-2 text-sm sm:gap-4">
+        <nav className="flex items-center gap-2 text-sm sm:gap-3">
           <Link href="/docs" className={navLinkClass(isDocs, true)}>
             Docs
           </Link>
@@ -60,10 +67,31 @@ export default function Header() {
             href={FEEDBACK_FORM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-lg px-2 py-2 font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+            className="hidden rounded-lg px-2 py-2 font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 sm:inline-flex"
           >
             フィードバック
           </a>
+          <SignedOut>
+            <SignInButton mode="modal">
+              <button
+                type="button"
+                className="rounded-lg px-3 py-2 font-medium text-slate-700 transition hover:bg-slate-100"
+              >
+                ログイン
+              </button>
+            </SignInButton>
+            <SignUpButton mode="modal">
+              <button
+                type="button"
+                className="rounded-lg bg-slate-900 px-3 py-2 font-medium text-white transition hover:bg-slate-800"
+              >
+                登録
+              </button>
+            </SignUpButton>
+          </SignedOut>
+          <SignedIn>
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
         </nav>
       </div>
     </header>

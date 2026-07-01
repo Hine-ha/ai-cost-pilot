@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs/server";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
 import { parseTrackUsagePayload } from "@/lib/usage-validation";
 
@@ -6,6 +7,15 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest) {
   try {
+    const { userId } = auth();
+
+    if (!userId) {
+      return NextResponse.json(
+        { error: "Unauthorized. Sign in or pass a valid Clerk session." },
+        { status: 401 }
+      );
+    }
+
     let body: unknown;
 
     try {
@@ -25,8 +35,10 @@ export async function POST(request: NextRequest) {
     const supabase = getSupabaseAdmin();
     const { data, error } = await supabase
       .from("usage_events")
-      .insert(parsed.data)
-      .select("id, project_name, model, input_tokens, output_tokens, cost, timestamp, created_at")
+      .insert({ ...parsed.data, user_id: userId })
+      .select(
+        "id, project_name, model, input_tokens, output_tokens, cost, timestamp, user_id, created_at"
+      )
       .single();
 
     if (error) {

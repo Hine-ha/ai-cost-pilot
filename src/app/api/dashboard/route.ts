@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs/server";
 import { buildDashboardResponse } from "@/lib/dashboard-aggregator";
 import {
   getMissingSupabaseEnvVars,
@@ -9,11 +10,17 @@ import { UsageEventRow } from "@/types/usage";
 export const dynamic = "force-dynamic";
 
 const BASE_SELECT =
-  "id, project_name, model, input_tokens, output_tokens, cost, timestamp, created_at";
+  "id, project_name, model, input_tokens, output_tokens, cost, timestamp, user_id, created_at";
 const EXTENDED_SELECT = `${BASE_SELECT}, status, cache_saved`;
 
 export async function GET(request: NextRequest) {
   try {
+    const { userId } = auth();
+
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+    }
+
     const supabase = getSupabaseAdmin();
     const projectFilter = request.nextUrl.searchParams.get("project");
 
@@ -23,15 +30,21 @@ export async function GET(request: NextRequest) {
     const extended = await supabase
       .from("usage_events")
       .select(EXTENDED_SELECT)
+      .eq("user_id", userId)
       .order("timestamp", { ascending: false });
 
     data = (extended.data ?? null) as UsageEventRow[] | null;
     error = extended.error;
 
-    if (error?.message?.includes("cache_saved") || error?.message?.includes("status")) {
+    if (
+      error?.message?.includes("cache_saved") ||
+      error?.message?.includes("status") ||
+      error?.message?.includes("user_id")
+    ) {
       const fallback = await supabase
         .from("usage_events")
         .select(BASE_SELECT)
+        .eq("user_id", userId)
         .order("timestamp", { ascending: false });
 
       data = (fallback.data ?? null) as UsageEventRow[] | null;

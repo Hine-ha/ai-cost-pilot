@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -19,7 +20,14 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
       <body className="min-h-screen bg-white font-sans text-gray-900 antialiased">
-        {children}
+        <ClerkProvider
+          signInUrl="/sign-in"
+          signUpUrl="/sign-up"
+          afterSignInUrl="/dashboard"
+          afterSignUpUrl="/dashboard"
+        >
+          {children}
+        </ClerkProvider>
       </body>
     </html>
   );

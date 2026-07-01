@@ -5,6 +5,7 @@ export interface TrackUsagePayload {
   output_tokens: number;
   cost: number;
   timestamp: string;
+  user_id?: string;
   status?: string;
   cache_saved?: number;
 }
@@ -18,6 +19,7 @@ export interface UsageEventRow {
   cost: number;
   timestamp: string;
   created_at: string;
+  user_id?: string | null;
   status?: string;
   cache_saved?: number;
 }
