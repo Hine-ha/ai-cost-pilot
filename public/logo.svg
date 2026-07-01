@@ -1,0 +1,48 @@
+<svg width="100%" viewBox="0 0 680 300" role="img">
+<title>TokenLens logo</title>
+<desc>TokenLens premium logo</desc>
+<defs>
+  <clipPath id="lcp"><circle cx="148" cy="148" r="100"/></clipPath>
+  <radialGradient id="lensBg" cx="40%" cy="35%" r="65%">
+    <stop offset="0%" stop-color="#1e3a5f"/>
+    <stop offset="60%" stop-color="#0f1f3d"/>
+    <stop offset="100%" stop-color="#060d1f"/>
+  </radialGradient>
+  <linearGradient id="ring1" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#c0c8d8"/>
+    <stop offset="30%" stop-color="#f8fafc"/>
+    <stop offset="60%" stop-color="#64748b"/>
+    <stop offset="100%" stop-color="#94a3b8"/>
+  </linearGradient>
+  <linearGradient id="b4" x1="0" y1="0" x2="0.3" y2="0">
+    <stop offset="0%" stop-color="#1d4ed8"/>
+    <stop offset="100%" stop-color="#60a5fa"/>
+  </linearGradient>
+  <linearGradient id="hndl" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#cbd5e1"/>
+    <stop offset="40%" stop-color="#f1f5f9"/>
+    <stop offset="100%" stop-color="#475569"/>
+  </linearGradient>
+</defs>
+<circle cx="152" cy="152" r="102" fill="#000" opacity="0.2"/>
+<circle cx="148" cy="148" r="100" fill="url(#lensBg)" stroke="url(#ring1)" stroke-width="7"/>
+<g clip-path="url(#lcp)">
+  <rect x="82" y="192" width="22" height="28" rx="2" fill="#4a6080"/>
+  <rect x="112" y="174" width="22" height="46" rx="2" fill="#5b82aa"/>
+  <rect x="142" y="158" width="22" height="62" rx="2" fill="#2563a8"/>
+  <rect x="172" y="138" width="22" height="82" rx="2" fill="url(#b4)"/>
+  <polyline points="93,190 123,172 153,156 183,136" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="93" cy="190" r="4" fill="#fbbf24" stroke="#0f1f3d" stroke-width="1.5"/>
+  <circle cx="123" cy="172" r="4" fill="#fbbf24" stroke="#0f1f3d" stroke-width="1.5"/>
+  <circle cx="153" cy="156" r="4" fill="#fbbf24" stroke="#0f1f3d" stroke-width="1.5"/>
+  <circle cx="183" cy="136" r="4" fill="#fbbf24" stroke="#0f1f3d" stroke-width="1.5"/>
+</g>
+<circle cx="148" cy="148" r="100" fill="none" stroke="url(#ring1)" stroke-width="7"/>
+<line x1="222" y1="222" x2="262" y2="262" stroke="url(#hndl)" stroke-width="14" stroke-linecap="round"/>
+<text x="302" y="124" font-family="system-ui" font-size="62" font-weight="500" fill="#0f172a" letter-spacing="-2">token</text>
+<text x="302" y="190" font-family="system-ui" font-size="62" font-weight="500" letter-spacing="-2">
+  <tspan fill="#1d4ed8">l</tspan><tspan fill="#2563eb">e</tspan><tspan fill="#3b82f6">n</tspan><tspan fill="#60a5fa">s</tspan>
+</text>
+<line x1="302" y1="208" x2="618" y2="208" stroke="#e2e8f0" stroke-width="0.5"/>
+<text x="304" y="228" font-family="system-ui" font-size="13" font-weight="400" fill="#94a3b8" letter-spacing="3">AI TOKEN COST VISIBILITY</text>
+</svg>

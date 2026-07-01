@@ -75,7 +75,7 @@ export default function CsvUploadPanel() {
         </h3>
         <p className="mt-2 text-sm leading-relaxed text-gray-600">
           CSVファイルは、AIアプリケーションのAPI利用ログ、LLM監視ツール、または社内の利用記録からエクスポートしたデータを想定しています。現在は
-          AI Cost Pilot 標準CSV形式に対応しています。ログをお持ちでない場合は、手動入力で簡易診断をご利用ください。
+          TokenLens 標準CSV形式に対応しています。ログをお持ちでない場合は、手動入力で簡易診断をご利用ください。
         </p>
         <ul className="mt-3 space-y-1.5 text-sm text-gray-700">
           <li className="flex gap-2">

@@ -746,7 +746,7 @@ export default function ResultsPage() {
               PDFレポートを出力
             </button>
             <a
-              href="mailto:hello@aicostpilot.com?subject=AI%20Cost%20Pilot%20無料相談の予約"
+              href="mailto:hello@aicostpilot.com?subject=TokenLens%20無料相談の予約"
               className="inline-flex w-full items-center justify-center rounded-xl border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-800 transition hover:bg-gray-50 sm:w-auto"
             >
               無料相談を予約する
@@ -813,7 +813,7 @@ export default function ResultsPage() {
             </div>
 
             <a
-              href="mailto:by1019322@qq.com?subject=AI%20Cost%20Pilot%20%E8%A9%B3%E7%B4%B0%E8%A8%BA%E6%96%AD%E3%81%AE%E7%9B%B8%E8%AB%87"
+              href="mailto:by1019322@qq.com?subject=TokenLens%20%E8%A9%B3%E7%B4%B0%E8%A8%BA%E6%96%AD%E3%81%AE%E7%9B%B8%E8%AB%87"
               className="inline-flex w-full items-center justify-center rounded-xl border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-800 transition hover:bg-gray-50 print:hidden sm:w-auto sm:flex-none sm:min-w-[220px]"
             >
               メールで相談する
