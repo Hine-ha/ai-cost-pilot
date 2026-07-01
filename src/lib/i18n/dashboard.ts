@@ -17,6 +17,8 @@ const messages = {
     outputTokens: "Output Tokens",
     cost: "花费",
     noData: "暂无数据",
+    noDataHint:
+      "上报数据时需带上 user_id（Dashboard 上方可复制），或设置环境变量 TOKENLENS_USER_ID。",
     loadError: "加载失败，请稍后重试",
     retry: "重试",
     language: "语言",
@@ -31,7 +33,7 @@ const messages = {
     userIdLabel: "你的 user_id",
     copy: "复制",
     copied: "已复制",
-    sdkExample: "示例：track(client, project=\"my-app\", user_id=\"…\")",
+    sdkExample: "示例：track(client, project=\"my-app\") 或设置 TOKENLENS_USER_ID",
   },
   ja: {
     title: "利用量ダッシュボード",
@@ -49,6 +51,8 @@ const messages = {
     outputTokens: "Output Tokens",
     cost: "コスト",
     noData: "データがありません",
+    noDataHint:
+      "データ送信時に user_id（ダッシュボード上部でコピー可）または環境変数 TOKENLENS_USER_ID を設定してください。",
     loadError: "読み込みに失敗しました。しばらくしてから再試行してください",
     retry: "再試行",
     language: "言語",
@@ -63,7 +67,7 @@ const messages = {
     userIdLabel: "あなたの user_id",
     copy: "コピー",
     copied: "コピーしました",
-    sdkExample: "例：track(client, project=\"my-app\", user_id=\"…\")",
+    sdkExample: "例：track(client, project=\"my-app\") または TOKENLENS_USER_ID を設定",
   },
 } as const;
 

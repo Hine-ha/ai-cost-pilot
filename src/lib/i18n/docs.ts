@@ -18,12 +18,16 @@ const messages = {
     copied: "已复制",
     codeStep1:
       'pip3 install "git+https://github.com/Hine-ha/tokenlens-.git#subdirectory=tokenlens"',
-    codeStep2: `import anthropic
+    codeStep2: `# 环境变量（推荐）
+# export TOKENLENS_API_KEY="your-api-key"
+# export TOKENLENS_USER_ID="dashboard 上复制的 user_id"
+
+import anthropic
 from tokenlens import track
 
 client = track(
     anthropic.Anthropic(),
-    project="my-project"
+    project="my-project",
 )`,
     codeStep3: `# 之后正常使用，数据自动上报
 response = client.messages.create(
@@ -56,18 +60,22 @@ response = client.messages.create(
     copied: "コピーしました",
     codeStep1:
       'pip3 install "git+https://github.com/Hine-ha/tokenlens-.git#subdirectory=tokenlens"',
-    codeStep2: `import anthropic
+    codeStep2: `# 環境変数（推奨）
+# export TOKENLENS_API_KEY="your-api-key"
+# export TOKENLENS_USER_ID="ダッシュボードでコピーした user_id"
+
+import anthropic
 from tokenlens import track
 
 client = track(
     anthropic.Anthropic(),
-    project="my-project"
+    project="my-project",
 )`,
-    codeStep3: `# 之后正常使用，数据自动上报
+    codeStep3: `# 通常どおり API を利用するとデータが自動送信されます
 response = client.messages.create(
     model="claude-sonnet-4-6",
     max_tokens=1000,
-    messages=[{"role": "user", "content": "你好"}]
+    messages=[{"role": "user", "content": "こんにちは"}]
 )`,
     models: {
       claude: "Claude",

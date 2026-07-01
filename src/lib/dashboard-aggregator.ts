@@ -36,11 +36,15 @@ function buildDailyCostTrend(rows: UsageEventRow[]): DailyCostPoint[] {
     const ts = new Date(row.timestamp);
     if (ts < thirtyDaysAgo) continue;
     const key = formatDateKey(ts);
-    if (!dailyMap.has(key)) continue;
+    if (!dailyMap.has(key)) {
+      dailyMap.set(key, 0);
+    }
     dailyMap.set(key, (dailyMap.get(key) ?? 0) + Number(row.cost));
   }
 
-  return Array.from(dailyMap.entries()).map(([date, cost]) => ({ date, cost }));
+  return Array.from(dailyMap.entries())
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([date, cost]) => ({ date, cost }));
 }
 
 function buildModelBreakdown(rows: UsageEventRow[]): ModelUsageBreakdown[] {

@@ -1,5 +1,6 @@
 "use client";
 
+import { useAuth } from "@clerk/nextjs";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Header from "@/components/Header";
 import StatCard from "@/components/StatCard";
@@ -114,6 +115,7 @@ function detectDefaultLocale(): DashboardLocale {
 }
 
 export default function DashboardPage() {
+  const { isLoaded, isSignedIn } = useAuth();
   const [locale, setLocale] = useState<DashboardLocale>("ja");
   const [selectedProject, setSelectedProject] = useState("all");
   const [data, setData] = useState<DashboardResponse | null>(null);
@@ -156,8 +158,14 @@ export default function DashboardPage() {
   }, [selectedProject, t.loadError]);
 
   useEffect(() => {
+    if (!isLoaded || !isSignedIn) {
+      if (isLoaded && !isSignedIn) {
+        setIsLoading(false);
+      }
+      return;
+    }
     void loadDashboard();
-  }, [loadDashboard]);
+  }, [isLoaded, isSignedIn, loadDashboard]);
 
   const chartData = useMemo(
     () =>
@@ -217,6 +225,13 @@ export default function DashboardPage() {
             >
               {t.retry}
             </button>
+          </div>
+        )}
+
+        {!isLoading && !error && data && data.stats.total_requests === 0 && (
+          <div className="mb-8 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm text-amber-900">
+            <p className="font-medium">{t.noData}</p>
+            <p className="mt-2 text-amber-800/90">{t.noDataHint}</p>
           </div>
         )}
 
