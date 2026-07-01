@@ -2,7 +2,7 @@ interface ProgressBarProps {
   label: string;
   amount?: string;
   percentage: number;
-  color?: "indigo" | "red" | "emerald" | "amber";
+  color?: "indigo" | "sky" | "red" | "emerald" | "amber";
 }
 
 export default function ProgressBar({
@@ -15,6 +15,7 @@ export default function ProgressBar({
 
   const barColor = {
     indigo: "bg-indigo-600",
+    sky: "bg-sky-600",
     red: "bg-red-500",
     emerald: "bg-emerald-500",
     amber: "bg-amber-500",
