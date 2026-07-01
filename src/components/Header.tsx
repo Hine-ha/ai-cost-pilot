@@ -15,6 +15,12 @@ export default function Header() {
         </Link>
         <nav className="flex items-center gap-4 text-sm">
           <Link
+            href="/docs"
+            className="hidden rounded-lg px-2 py-2 font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 sm:inline"
+          >
+            Docs
+          </Link>
+          <Link
             href="/dashboard"
             className="rounded-lg px-2 py-2 font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
           >
