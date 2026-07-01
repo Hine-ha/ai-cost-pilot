@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { buildDashboardResponse } from "@/lib/dashboard-aggregator";
-import { getSupabaseAdmin } from "@/lib/supabase/server";
+import {
+  getMissingSupabaseEnvVars,
+  getSupabaseAdmin,
+} from "@/lib/supabase/server";
 import { UsageEventRow } from "@/types/usage";
 
 export const dynamic = "force-dynamic";
@@ -71,10 +74,16 @@ export async function GET(request: NextRequest) {
     console.error("[GET /api/dashboard]", error);
     const message =
       error instanceof Error ? error.message : "Internal server error.";
-    const status = message.includes("Missing NEXT_PUBLIC_SUPABASE_URL")
-      ? 503
-      : 500;
+    const missing = getMissingSupabaseEnvVars();
+    const status = missing.length > 0 ? 503 : 500;
 
-    return NextResponse.json({ error: message }, { status });
+    return NextResponse.json(
+      {
+        error: message,
+        missing_env: missing,
+        hint: "Vercel → Settings → Environment Variables → add variables → Redeploy",
+      },
+      { status }
+    );
   }
 }

@@ -2,17 +2,32 @@ import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
 let supabaseAdmin: SupabaseClient | null = null;
 
+export function getMissingSupabaseEnvVars(): string[] {
+  const missing: string[] = [];
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL?.trim()) {
+    missing.push("NEXT_PUBLIC_SUPABASE_URL");
+  }
+  if (
+    !process.env.SUPABASE_SERVICE_ROLE_KEY?.trim() &&
+    !process.env.SUPABASE_SECRET_KEY?.trim()
+  ) {
+    missing.push("SUPABASE_SECRET_KEY (or SUPABASE_SERVICE_ROLE_KEY)");
+  }
+  return missing;
+}
+
 export function getSupabaseAdmin(): SupabaseClient {
   if (supabaseAdmin) return supabaseAdmin;
 
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
   const serviceRoleKey =
-    process.env.SUPABASE_SERVICE_ROLE_KEY ??
-    process.env.SUPABASE_SECRET_KEY;
+    process.env.SUPABASE_SERVICE_ROLE_KEY?.trim() ??
+    process.env.SUPABASE_SECRET_KEY?.trim();
 
   if (!url || !serviceRoleKey) {
+    const missing = getMissingSupabaseEnvVars();
     throw new Error(
-      "Missing NEXT_PUBLIC_SUPABASE_URL or server-side Supabase key (SUPABASE_SERVICE_ROLE_KEY or SUPABASE_SECRET_KEY)."
+      `Missing Supabase environment variables: ${missing.join(", ")}`
     );
   }
 
