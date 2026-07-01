@@ -55,6 +55,12 @@ export function parseTrackUsagePayload(
       output_tokens: payload.output_tokens,
       cost: payload.cost,
       timestamp: new Date(payload.timestamp).toISOString(),
+      ...(isNonEmptyString(payload.status) && {
+        status: payload.status.trim().toLowerCase(),
+      }),
+      ...(isNonNegativeNumber(payload.cache_saved) && {
+        cache_saved: payload.cache_saved,
+      }),
     },
   };
 }

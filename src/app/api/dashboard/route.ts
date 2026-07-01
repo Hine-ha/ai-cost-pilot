@@ -1,19 +1,39 @@
-import { NextResponse } from "next/server";
-import { aggregateUsageByProject } from "@/lib/dashboard-aggregator";
+import { NextRequest, NextResponse } from "next/server";
+import { buildDashboardResponse } from "@/lib/dashboard-aggregator";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
 import { UsageEventRow } from "@/types/usage";
 
 export const dynamic = "force-dynamic";
 
-export async function GET() {
+const BASE_SELECT =
+  "id, project_name, model, input_tokens, output_tokens, cost, timestamp, created_at";
+const EXTENDED_SELECT = `${BASE_SELECT}, status, cache_saved`;
+
+export async function GET(request: NextRequest) {
   try {
     const supabase = getSupabaseAdmin();
-    const { data, error } = await supabase
+    const projectFilter = request.nextUrl.searchParams.get("project");
+
+    let data: UsageEventRow[] | null = null;
+    let error: { message?: string; hint?: string } | null = null;
+
+    const extended = await supabase
       .from("usage_events")
-      .select(
-        "id, project_name, model, input_tokens, output_tokens, cost, timestamp, created_at"
-      )
+      .select(EXTENDED_SELECT)
       .order("timestamp", { ascending: false });
+
+    data = (extended.data ?? null) as UsageEventRow[] | null;
+    error = extended.error;
+
+    if (error?.message?.includes("cache_saved") || error?.message?.includes("status")) {
+      const fallback = await supabase
+        .from("usage_events")
+        .select(BASE_SELECT)
+        .order("timestamp", { ascending: false });
+
+      data = (fallback.data ?? null) as UsageEventRow[] | null;
+      error = fallback.error;
+    }
 
     if (error) {
       console.error("[GET /api/dashboard]", error);
@@ -29,9 +49,24 @@ export async function GET() {
       );
     }
 
-    const dashboard = aggregateUsageByProject((data ?? []) as UsageEventRow[]);
+    const allRows = (data ?? []) as UsageEventRow[];
+    const availableProjects = Array.from(
+      new Set(allRows.map((row) => row.project_name))
+    ).sort();
 
-    return NextResponse.json(dashboard);
+    const filteredRows =
+      projectFilter && projectFilter !== "all"
+        ? allRows.filter((row) => row.project_name === projectFilter)
+        : allRows;
+
+    const dashboard = buildDashboardResponse(filteredRows);
+
+    return NextResponse.json({
+      ...dashboard,
+      available_projects: availableProjects,
+      selected_project:
+        projectFilter && projectFilter !== "all" ? projectFilter : null,
+    });
   } catch (error) {
     console.error("[GET /api/dashboard]", error);
     const message =

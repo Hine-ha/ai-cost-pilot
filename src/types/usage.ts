@@ -5,6 +5,8 @@ export interface TrackUsagePayload {
   output_tokens: number;
   cost: number;
   timestamp: string;
+  status?: string;
+  cache_saved?: number;
 }
 
 export interface UsageEventRow {
@@ -16,6 +18,8 @@ export interface UsageEventRow {
   cost: number;
   timestamp: string;
   created_at: string;
+  status?: string;
+  cache_saved?: number;
 }
 
 export interface ProjectUsageSummary {
@@ -29,6 +33,26 @@ export interface ProjectUsageSummary {
   models: string[];
 }
 
+export interface DashboardStats {
+  monthly_total_cost: number;
+  total_requests: number;
+  failure_rate: number;
+  cache_savings: number;
+}
+
+export interface DailyCostPoint {
+  date: string;
+  cost: number;
+}
+
+export interface ModelUsageBreakdown {
+  model: string;
+  request_count: number;
+  input_tokens: number;
+  output_tokens: number;
+  cost: number;
+}
+
 export interface DashboardResponse {
   projects: ProjectUsageSummary[];
   summary: {
@@ -39,4 +63,9 @@ export interface DashboardResponse {
     total_tokens: number;
     total_cost: number;
   };
+  stats: DashboardStats;
+  daily_cost_trend: DailyCostPoint[];
+  model_breakdown: ModelUsageBreakdown[];
+  available_projects: string[];
+  selected_project: string | null;
 }
