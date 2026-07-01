@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { FEEDBACK_FORM_URL } from "@/lib/links";
 
@@ -25,10 +26,13 @@ export default function Header() {
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
         <Link href="/" className="flex items-center gap-2.5">
-          <img
+          <Image
             src="/favicon.svg"
             alt="TokenLens"
-            className="h-9 w-9 rounded-lg shadow-sm"
+            width={36}
+            height={36}
+            className="rounded-lg shadow-sm"
+            priority
           />
           <span className="font-serif text-lg font-semibold tracking-tight text-slate-900">
             TokenLens
