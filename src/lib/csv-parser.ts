@@ -85,6 +85,10 @@ export const SAMPLE_CSV = `timestamp,model,input_tokens,output_tokens,status,lat
 2026-06-18T10:04:00Z,DeepSeek Chat,900,250,error,2200,2,summarization`;
 
 export function downloadSampleCsv(): void {
+  if (typeof window === "undefined" || typeof document === "undefined") {
+    return;
+  }
+
   const blob = new Blob([SAMPLE_CSV], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
