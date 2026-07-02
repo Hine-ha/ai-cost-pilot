@@ -104,6 +104,41 @@ export default function DocsPage() {
           </div>
         </div>
 
+        <section className="mb-12">
+          <h2 className="text-xl font-semibold text-slate-900">{t.prereqTitle}</h2>
+          <div className="mt-6 space-y-8">
+            <div>
+              <h3 className="mb-3 text-sm font-semibold text-slate-800">
+                1. {t.prereqInstallLabel}
+              </h3>
+              <CodeBlock
+                code={t.codePrereqInstall}
+                language="shell"
+                copyLabel={t.copy}
+                copiedLabel={t.copied}
+              />
+            </div>
+            <div>
+              <h3 className="mb-3 text-sm font-semibold text-slate-800">
+                2. {t.prereqApiKeyLabel}
+              </h3>
+              <CodeBlock
+                code={t.codePrereqApiKey}
+                language="shell"
+                copyLabel={t.copy}
+                copiedLabel={t.copied}
+              />
+              <p className="mt-4 text-sm text-slate-600">{t.prereqApiKeyNote}</p>
+              <Link
+                href="/dashboard"
+                className="mt-3 inline-flex items-center justify-center rounded-xl bg-sky-700 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-800"
+              >
+                {t.viewDashboard}
+              </Link>
+            </div>
+          </div>
+        </section>
+
         <ol className="mb-12 grid gap-4 md:grid-cols-3">
           {STEPS.map((step, index) => (
             <li

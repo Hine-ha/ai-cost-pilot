@@ -16,8 +16,16 @@ const messages = {
     feedback: "反馈",
     copy: "复制",
     copied: "已复制",
+    prereqTitle: "前提条件",
+    prereqInstallLabel: "安装 SDK",
+    prereqApiKeyLabel: "设置 API Key（写入环境变量，永久生效）",
+    prereqApiKeyNote: "API Key 在仪表盘的设置页面获取",
+    codePrereqInstall:
+      'pip3 install "git+https://github.com/Hine-ha/tokenlens-.git#subdirectory=tokenlens"',
+    codePrereqApiKey: `echo 'export TOKENLENS_API_KEY=你的key' >> ~/.zshrc
+source ~/.zshrc`,
     codeStep1:
-      'pip3 install --upgrade "git+https://github.com/Hine-ha/tokenlens-.git"',
+      'pip3 install "git+https://github.com/Hine-ha/tokenlens-.git#subdirectory=tokenlens"',
     codeStep2: `# 环境变量（推荐）
 # export TOKENLENS_API_KEY="your-api-key"
 # export TOKENLENS_USER_ID="dashboard 上复制的 user_id"
@@ -58,8 +66,16 @@ response = client.messages.create(
     feedback: "フィードバック",
     copy: "コピー",
     copied: "コピーしました",
+    prereqTitle: "前提条件",
+    prereqInstallLabel: "SDK をインストール",
+    prereqApiKeyLabel: "API Key を設定（環境変数に永続化）",
+    prereqApiKeyNote: "API Key はダッシュボードの設定ページで取得できます",
+    codePrereqInstall:
+      'pip3 install "git+https://github.com/Hine-ha/tokenlens-.git#subdirectory=tokenlens"',
+    codePrereqApiKey: `echo 'export TOKENLENS_API_KEY=your-key' >> ~/.zshrc
+source ~/.zshrc`,
     codeStep1:
-      'pip3 install --upgrade "git+https://github.com/Hine-ha/tokenlens-.git"',
+      'pip3 install "git+https://github.com/Hine-ha/tokenlens-.git#subdirectory=tokenlens"',
     codeStep2: `# 環境変数（推奨）
 # export TOKENLENS_API_KEY="your-api-key"
 # export TOKENLENS_USER_ID="ダッシュボードでコピーした user_id"
