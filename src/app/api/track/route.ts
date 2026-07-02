@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs/server";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
 import { parseTrackUsagePayload } from "@/lib/usage-validation";
 
@@ -40,10 +41,18 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: parsed.error }, { status: 400 });
     }
 
+    let eventData = parsed.data;
+    if (!eventData.user_id) {
+      const { userId } = auth();
+      if (userId) {
+        eventData = { ...eventData, user_id: userId };
+      }
+    }
+
     const supabase = getSupabaseAdmin();
     const { data, error } = await supabase
       .from("usage_events")
-      .insert(parsed.data)
+      .insert(eventData)
       .select(
         "id, project_name, model, input_tokens, output_tokens, cost, timestamp, user_id, created_at"
       )

@@ -23,6 +23,7 @@ export async function GET(request: NextRequest) {
 
     const supabase = getSupabaseAdmin();
     const projectFilter = request.nextUrl.searchParams.get("project");
+    const userScope = `user_id.eq.${userId},user_id.is.null`;
 
     let data: UsageEventRow[] | null = null;
     let error: { message?: string; hint?: string } | null = null;
@@ -30,7 +31,7 @@ export async function GET(request: NextRequest) {
     const extended = await supabase
       .from("usage_events")
       .select(EXTENDED_SELECT)
-      .eq("user_id", userId)
+      .or(userScope)
       .order("timestamp", { ascending: false });
 
     data = (extended.data ?? null) as UsageEventRow[] | null;
@@ -44,7 +45,7 @@ export async function GET(request: NextRequest) {
       const fallback = await supabase
         .from("usage_events")
         .select(BASE_SELECT)
-        .eq("user_id", userId)
+        .or(userScope)
         .order("timestamp", { ascending: false });
 
       data = (fallback.data ?? null) as UsageEventRow[] | null;
