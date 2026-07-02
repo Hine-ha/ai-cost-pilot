@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Header from "@/components/Header";
-import CodeBlock from "@/components/docs/CodeBlock";
+import CodeBlock, { TabbedCodeBlock } from "@/components/docs/CodeBlock";
 import { FEEDBACK_FORM_URL } from "@/lib/links";
 import { DocsLocale, getDocsMessages } from "@/lib/i18n/docs";
 
@@ -41,8 +41,8 @@ const MODELS = [
 
 const STEPS = [
   { key: "step1" as const, codeKey: "codeStep1" as const, lang: "shell" as const },
-  { key: "step2" as const, codeKey: "codeStep2" as const, lang: "python" as const },
-  { key: "step3" as const, codeKey: "codeStep3" as const, lang: "python" as const },
+  { key: "step2" as const, lang: "python" as const, tabbed: true as const },
+  { key: "step3" as const, codeKey: "codeStep3" as const, lang: "shell" as const },
 ];
 
 function detectDefaultLocale(): DocsLocale {
@@ -171,12 +171,32 @@ export default function DocsPage() {
                   {t[`${step.key}Title`]}
                 </h2>
               </div>
-              <CodeBlock
-                code={t[step.codeKey]}
-                language={step.lang}
-                copyLabel={t.copy}
-                copiedLabel={t.copied}
-              />
+              {step.key === "step2" ? (
+                <TabbedCodeBlock
+                  tabs={[
+                    {
+                      id: "anthropic",
+                      label: t.tabAnthropic,
+                      code: t.codeStep2Anthropic,
+                    },
+                    {
+                      id: "openai",
+                      label: t.tabOpenAI,
+                      code: t.codeStep2OpenAI,
+                    },
+                  ]}
+                  language="python"
+                  copyLabel={t.copy}
+                  copiedLabel={t.copied}
+                />
+              ) : (
+                <CodeBlock
+                  code={t[step.codeKey!]}
+                  language={step.lang}
+                  copyLabel={t.copy}
+                  copiedLabel={t.copied}
+                />
+              )}
             </section>
           ))}
         </div>

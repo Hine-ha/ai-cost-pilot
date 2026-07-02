@@ -9,13 +9,15 @@ const messages = {
     step2Title: "初始化",
     step3Title: "查看仪表盘",
     step1Desc: "通过 pip 安装 TokenLens SDK",
-    step2Desc: "用 track() 包装 Anthropic 客户端",
-    step3Desc: "正常使用 API，数据自动上报",
+    step2Desc: "用 track() 包装 Anthropic 或 OpenAI 客户端",
+    step3Desc: "在仪表盘查看自动上报的用量与成本",
     supportedModels: "支持的模型",
     viewDashboard: "查看仪表盘",
     feedback: "反馈",
     copy: "复制",
-    copied: "已复制",
+    copied: "已复制 ✓",
+    tabAnthropic: "Anthropic",
+    tabOpenAI: "OpenAI",
     prereqTitle: "前提条件",
     prereqInstallLabel: "安装 SDK",
     prereqApiKeyLabel: "设置 API Key（写入环境变量，永久生效）",
@@ -26,23 +28,35 @@ const messages = {
 source ~/.zshrc`,
     codeStep1:
       'pip3 install "git+https://github.com/Hine-ha/tokenlens-.git#subdirectory=tokenlens"',
-    codeStep2: `# 环境变量（推荐）
-# export TOKENLENS_API_KEY="your-api-key"
-# export TOKENLENS_USER_ID="dashboard 上复制的 user_id"
-
-import anthropic
+    codeStep2Anthropic: `import anthropic
 from tokenlens import track
 
 client = track(
     anthropic.Anthropic(),
-    project="my-project",
-)`,
-    codeStep3: `# 之后正常使用，数据自动上报
+    project="my-project"
+)
+
+# 之后正常使用
 response = client.messages.create(
-    model="claude-sonnet-4-6",
+    model="claude-haiku-4-5-20251001",
     max_tokens=1000,
     messages=[{"role": "user", "content": "你好"}]
 )`,
+    codeStep2OpenAI: `import openai
+from tokenlens import track
+
+client = track(
+    openai.OpenAI(),
+    project="my-project"
+)
+
+# 之后正常使用
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[{"role": "user", "content": "你好"}]
+)`,
+    codeStep3: `# 打开仪表盘查看上报数据
+# https://my-tokenlens.vercel.app/dashboard`,
     models: {
       claude: "Claude",
       gpt4: "GPT-4",
@@ -59,13 +73,15 @@ response = client.messages.create(
     step2Title: "初期化",
     step3Title: "ダッシュボードを確認",
     step1Desc: "pip で TokenLens SDK をインストール",
-    step2Desc: "track() で Anthropic クライアントをラップ",
-    step3Desc: "通常どおり API を利用するとデータが自動送信されます",
+    step2Desc: "track() で Anthropic または OpenAI クライアントをラップ",
+    step3Desc: "ダッシュボードで自動送信された利用量とコストを確認",
     supportedModels: "対応モデル",
     viewDashboard: "ダッシュボードを見る",
     feedback: "フィードバック",
     copy: "コピー",
-    copied: "コピーしました",
+    copied: "コピーしました ✓",
+    tabAnthropic: "Anthropic",
+    tabOpenAI: "OpenAI",
     prereqTitle: "前提条件",
     prereqInstallLabel: "SDK をインストール",
     prereqApiKeyLabel: "API Key を設定（環境変数に永続化）",
@@ -76,23 +92,35 @@ response = client.messages.create(
 source ~/.zshrc`,
     codeStep1:
       'pip3 install "git+https://github.com/Hine-ha/tokenlens-.git#subdirectory=tokenlens"',
-    codeStep2: `# 環境変数（推奨）
-# export TOKENLENS_API_KEY="your-api-key"
-# export TOKENLENS_USER_ID="ダッシュボードでコピーした user_id"
-
-import anthropic
+    codeStep2Anthropic: `import anthropic
 from tokenlens import track
 
 client = track(
     anthropic.Anthropic(),
-    project="my-project",
-)`,
-    codeStep3: `# 通常どおり API を利用するとデータが自動送信されます
+    project="my-project"
+)
+
+# 通常どおり利用
 response = client.messages.create(
-    model="claude-sonnet-4-6",
+    model="claude-haiku-4-5-20251001",
     max_tokens=1000,
     messages=[{"role": "user", "content": "こんにちは"}]
 )`,
+    codeStep2OpenAI: `import openai
+from tokenlens import track
+
+client = track(
+    openai.OpenAI(),
+    project="my-project"
+)
+
+# 通常どおり利用
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[{"role": "user", "content": "こんにちは"}]
+)`,
+    codeStep3: `# ダッシュボードで送信データを確認
+# https://my-tokenlens.vercel.app/dashboard`,
     models: {
       claude: "Claude",
       gpt4: "GPT-4",
