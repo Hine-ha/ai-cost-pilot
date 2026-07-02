@@ -30,12 +30,17 @@ const messages = {
     allProjects: "全部项目",
     sdkConfigTitle: "SDK 配置",
     sdkConfigDesc:
-      "设置 TOKENLENS_API_KEY 后 SDK 才会上报；user_id 可在此复制，或设置 TOKENLENS_USER_ID。",
-    userIdLabel: "你的 user_id",
+      "复制 API Key 和 user_id 到本地环境变量，SDK 即可上报数据。",
+    apiKeyLabel: "TOKENLENS_API_KEY",
+    apiKeyLoading: "正在加载 API Key…",
+    apiKeyLoadError: "无法加载 API Key，请刷新重试。",
+    apiKeyNotConfigured:
+      "服务端未配置 TOKENLENS_API_KEY。请在 Vercel 环境变量中添加后重新部署。",
+    userIdLabel: "TOKENLENS_USER_ID（你的 user_id）",
     copy: "复制",
     copied: "已复制",
     sdkExample:
-      "示例：export TOKENLENS_API_KEY=… TOKENLENS_USER_ID=… 后 track(client, project=\"my-app\")",
+      '示例：echo \'export TOKENLENS_API_KEY=…\' >> ~/.zshrc && echo \'export TOKENLENS_USER_ID=…\' >> ~/.zshrc',
   },
   ja: {
     title: "利用量ダッシュボード",
@@ -66,12 +71,17 @@ const messages = {
     allProjects: "すべて",
     sdkConfigTitle: "SDK 設定",
     sdkConfigDesc:
-      "TOKENLENS_API_KEY を設定すると SDK が送信します。user_id はここでコピーするか TOKENLENS_USER_ID を設定してください。",
-    userIdLabel: "あなたの user_id",
+      "API Key と user_id をコピーして環境変数に設定すると SDK が送信されます。",
+    apiKeyLabel: "TOKENLENS_API_KEY",
+    apiKeyLoading: "API Key を読み込み中…",
+    apiKeyLoadError: "API Key を読み込めませんでした。再読み込みしてください。",
+    apiKeyNotConfigured:
+      "サーバーに TOKENLENS_API_KEY が未設定です。Vercel の環境変数に追加して再デプロイしてください。",
+    userIdLabel: "TOKENLENS_USER_ID（あなたの user_id）",
     copy: "コピー",
     copied: "コピーしました",
     sdkExample:
-      "例：export TOKENLENS_API_KEY=… TOKENLENS_USER_ID=… のあと track(client, project=\"my-app\")",
+      "例：echo 'export TOKENLENS_API_KEY=…' >> ~/.zshrc && echo 'export TOKENLENS_USER_ID=…' >> ~/.zshrc",
   },
 } as const;
 
