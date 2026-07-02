@@ -28,17 +28,8 @@ function buildDailyCostTrend(rows: UsageEventRow[]): DailyCostPoint[] {
     dailyMap.set(formatDateKey(day), 0);
   }
 
-  const thirtyDaysAgo = new Date(now);
-  thirtyDaysAgo.setUTCDate(thirtyDaysAgo.getUTCDate() - 29);
-  thirtyDaysAgo.setUTCHours(0, 0, 0, 0);
-
   for (const row of rows) {
-    const ts = new Date(row.timestamp);
-    if (ts < thirtyDaysAgo) continue;
-    const key = formatDateKey(ts);
-    if (!dailyMap.has(key)) {
-      dailyMap.set(key, 0);
-    }
+    const key = formatDateKey(new Date(row.timestamp));
     dailyMap.set(key, (dailyMap.get(key) ?? 0) + Number(row.cost));
   }
 

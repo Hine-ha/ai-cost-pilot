@@ -18,7 +18,7 @@ const messages = {
     cost: "花费",
     noData: "暂无数据",
     noDataHint:
-      "上报数据时需带上 user_id（Dashboard 上方可复制），或设置环境变量 TOKENLENS_USER_ID。",
+      "在运行 SDK 的应用中设置 TOKENLENS_API_KEY，并用 user_id（Dashboard 上方可复制）或 TOKENLENS_USER_ID 关联到你的账号。",
     loadError: "加载失败，请稍后重试",
     retry: "重试",
     language: "语言",
@@ -29,11 +29,13 @@ const messages = {
     projectFilter: "项目筛选",
     allProjects: "全部项目",
     sdkConfigTitle: "SDK 配置",
-    sdkConfigDesc: "在 Python SDK 中传入 user_id，上报数据会关联到你的账号。",
+    sdkConfigDesc:
+      "设置 TOKENLENS_API_KEY 后 SDK 才会上报；user_id 可在此复制，或设置 TOKENLENS_USER_ID。",
     userIdLabel: "你的 user_id",
     copy: "复制",
     copied: "已复制",
-    sdkExample: "示例：track(client, project=\"my-app\") 或设置 TOKENLENS_USER_ID",
+    sdkExample:
+      "示例：export TOKENLENS_API_KEY=… TOKENLENS_USER_ID=… 后 track(client, project=\"my-app\")",
   },
   ja: {
     title: "利用量ダッシュボード",
@@ -52,7 +54,7 @@ const messages = {
     cost: "コスト",
     noData: "データがありません",
     noDataHint:
-      "データ送信時に user_id（ダッシュボード上部でコピー可）または環境変数 TOKENLENS_USER_ID を設定してください。",
+      "SDK を動かす環境に TOKENLENS_API_KEY を設定し、user_id（ダッシュボード上部でコピー可）または TOKENLENS_USER_ID でアカウントに紐づけてください。",
     loadError: "読み込みに失敗しました。しばらくしてから再試行してください",
     retry: "再試行",
     language: "言語",
@@ -63,11 +65,13 @@ const messages = {
     projectFilter: "プロジェクト",
     allProjects: "すべて",
     sdkConfigTitle: "SDK 設定",
-    sdkConfigDesc: "Python SDK に user_id を渡すと、データがあなたのアカウントに紐づきます。",
+    sdkConfigDesc:
+      "TOKENLENS_API_KEY を設定すると SDK が送信します。user_id はここでコピーするか TOKENLENS_USER_ID を設定してください。",
     userIdLabel: "あなたの user_id",
     copy: "コピー",
     copied: "コピーしました",
-    sdkExample: "例：track(client, project=\"my-app\") または TOKENLENS_USER_ID を設定",
+    sdkExample:
+      "例：export TOKENLENS_API_KEY=… TOKENLENS_USER_ID=… のあと track(client, project=\"my-app\")",
   },
 } as const;
 
