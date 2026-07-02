@@ -17,7 +17,7 @@ const messages = {
     copy: "复制",
     copied: "已复制",
     codeStep1:
-      'pip3 install "git+https://github.com/Hine-ha/tokenlens-.git#subdirectory=tokenlens"',
+      'pip3 install --upgrade "git+https://github.com/Hine-ha/tokenlens-.git"',
     codeStep2: `# 环境变量（推荐）
 # export TOKENLENS_API_KEY="your-api-key"
 # export TOKENLENS_USER_ID="dashboard 上复制的 user_id"
@@ -59,7 +59,7 @@ response = client.messages.create(
     copy: "コピー",
     copied: "コピーしました",
     codeStep1:
-      'pip3 install "git+https://github.com/Hine-ha/tokenlens-.git#subdirectory=tokenlens"',
+      'pip3 install --upgrade "git+https://github.com/Hine-ha/tokenlens-.git"',
     codeStep2: `# 環境変数（推奨）
 # export TOKENLENS_API_KEY="your-api-key"
 # export TOKENLENS_USER_ID="ダッシュボードでコピーした user_id"
