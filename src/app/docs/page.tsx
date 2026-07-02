@@ -127,6 +127,8 @@ export default function DocsPage() {
                 language="shell"
                 copyLabel={t.copy}
                 copiedLabel={t.copied}
+                annotate
+                footnote={t.prereqApiKeyFootnote}
               />
               <p className="mt-4 text-sm text-slate-600">{t.prereqApiKeyNote}</p>
               <Link
@@ -188,6 +190,8 @@ export default function DocsPage() {
                   language="python"
                   copyLabel={t.copy}
                   copiedLabel={t.copied}
+                  annotate
+                  footnote={t.step2Footnote}
                 />
               ) : (
                 <CodeBlock

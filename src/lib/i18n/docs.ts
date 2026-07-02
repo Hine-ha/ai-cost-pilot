@@ -22,9 +22,11 @@ const messages = {
     prereqInstallLabel: "安装 SDK",
     prereqApiKeyLabel: "设置 API Key（写入环境变量，永久生效）",
     prereqApiKeyNote: "API Key 在仪表盘的设置页面获取",
+    prereqApiKeyFootnote: "⚠️ 请将 YOUR_API_KEY 替换为 Dashboard 复制的 API Key",
+    step2Footnote: "⚠️ 请将 my-project 替换为你自己的项目名称",
     codePrereqInstall:
       'pip3 install "git+https://github.com/Hine-ha/tokenlens-.git#subdirectory=tokenlens"',
-    codePrereqApiKey: `echo 'export TOKENLENS_API_KEY=你的key' >> ~/.zshrc
+    codePrereqApiKey: `echo 'export TOKENLENS_API_KEY=YOUR_API_KEY' >> ~/.zshrc  # ← 改成 Dashboard 复制的 API Key
 source ~/.zshrc`,
     codeStep1:
       'pip3 install "git+https://github.com/Hine-ha/tokenlens-.git#subdirectory=tokenlens"',
@@ -33,12 +35,12 @@ from tokenlens import track
 
 client = track(
     anthropic.Anthropic(),
-    project="my-project"
+    project="my-project"  # ← 改成你的项目名
 )
 
 # 之后正常使用
 response = client.messages.create(
-    model="claude-haiku-4-5-20251001",
+    model="claude-haiku-4-5-20251001",  # ← 可替换为其他模型
     max_tokens=1000,
     messages=[{"role": "user", "content": "你好"}]
 )`,
@@ -47,12 +49,12 @@ from tokenlens import track
 
 client = track(
     openai.OpenAI(),
-    project="my-project"
+    project="my-project"  # ← 改成你的项目名
 )
 
 # 之后正常使用
 response = client.chat.completions.create(
-    model="gpt-4o-mini",
+    model="gpt-4o-mini",  # ← 可替换为其他模型
     messages=[{"role": "user", "content": "你好"}]
 )`,
     codeStep3: `# 打开仪表盘查看上报数据
@@ -86,9 +88,13 @@ response = client.chat.completions.create(
     prereqInstallLabel: "SDK をインストール",
     prereqApiKeyLabel: "API Key を設定（環境変数に永続化）",
     prereqApiKeyNote: "API Key はダッシュボードの設定ページで取得できます",
+    prereqApiKeyFootnote:
+      "⚠️ YOUR_API_KEY をダッシュボードでコピーした API Key に変更してください",
+    step2Footnote:
+      "⚠️ my-project をあなたのプロジェクト名に変更してください",
     codePrereqInstall:
       'pip3 install "git+https://github.com/Hine-ha/tokenlens-.git#subdirectory=tokenlens"',
-    codePrereqApiKey: `echo 'export TOKENLENS_API_KEY=your-key' >> ~/.zshrc
+    codePrereqApiKey: `echo 'export TOKENLENS_API_KEY=YOUR_API_KEY' >> ~/.zshrc  # ← ダッシュボードの API Key に変更
 source ~/.zshrc`,
     codeStep1:
       'pip3 install "git+https://github.com/Hine-ha/tokenlens-.git#subdirectory=tokenlens"',
@@ -97,12 +103,12 @@ from tokenlens import track
 
 client = track(
     anthropic.Anthropic(),
-    project="my-project"
+    project="my-project"  # ← プロジェクト名に変更
 )
 
 # 通常どおり利用
 response = client.messages.create(
-    model="claude-haiku-4-5-20251001",
+    model="claude-haiku-4-5-20251001",  # ← 他のモデルに変更可
     max_tokens=1000,
     messages=[{"role": "user", "content": "こんにちは"}]
 )`,
@@ -111,12 +117,12 @@ from tokenlens import track
 
 client = track(
     openai.OpenAI(),
-    project="my-project"
+    project="my-project"  # ← プロジェクト名に変更
 )
 
 # 通常どおり利用
 response = client.chat.completions.create(
-    model="gpt-4o-mini",
+    model="gpt-4o-mini",  # ← 他のモデルに変更可
     messages=[{"role": "user", "content": "こんにちは"}]
 )`,
     codeStep3: `# ダッシュボードで送信データを確認
