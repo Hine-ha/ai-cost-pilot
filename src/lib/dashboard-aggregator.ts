@@ -1,3 +1,4 @@
+import { computeCacheSavings } from "@/lib/usage-pricing";
 import {
   DailyCostPoint,
   DashboardResponse,
@@ -12,6 +13,11 @@ const FAILED_STATUSES = new Set(["error", "failed", "failure", "fail"]);
 function isFailedStatus(status: string | undefined): boolean {
   if (!status) return false;
   return FAILED_STATUSES.has(status.trim().toLowerCase());
+}
+
+function isFailedRow(row: UsageEventRow): boolean {
+  if (row.success === false) return true;
+  return isFailedStatus(row.status);
 }
 
 function formatDateKey(date: Date): string {
@@ -76,11 +82,15 @@ function buildDashboardStats(rows: UsageEventRow[]): DashboardStats {
       monthlyTotalCost += cost;
     }
 
-    if (isFailedStatus(row.status)) {
+    if (isFailedRow(row)) {
       failedCount += 1;
     }
 
-    cacheSavings += Number(row.cache_saved ?? 0);
+    cacheSavings += computeCacheSavings(
+      row.model,
+      row.cache_read_tokens ?? 0,
+      row.cache_saved
+    );
   }
 
   const totalRequests = rows.length;

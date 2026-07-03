@@ -54,7 +54,26 @@ export async function POST(request: NextRequest) {
       .from("usage_events")
       .insert(eventData)
       .select(
-        "id, project_name, model, input_tokens, output_tokens, cost, timestamp, user_id, created_at"
+        [
+          "id",
+          "project_name",
+          "model",
+          "input_tokens",
+          "output_tokens",
+          "cost",
+          "timestamp",
+          "user_id",
+          "created_at",
+          "cache_read_tokens",
+          "cache_write_tokens",
+          "provider",
+          "latency_ms",
+          "use_case",
+          "success",
+          "error_type",
+          "status",
+          "cache_saved",
+        ].join(", ")
       )
       .single();
 

@@ -12,6 +12,7 @@ export const dynamic = "force-dynamic";
 const BASE_SELECT =
   "id, project_name, model, input_tokens, output_tokens, cost, timestamp, user_id, created_at";
 const EXTENDED_SELECT = `${BASE_SELECT}, status, cache_saved`;
+const FULL_SELECT = `${EXTENDED_SELECT}, cache_read_tokens, cache_write_tokens, provider, latency_ms, use_case, success, error_type`;
 
 export async function GET(request: NextRequest) {
   try {
@@ -28,14 +29,25 @@ export async function GET(request: NextRequest) {
     let data: UsageEventRow[] | null = null;
     let error: { message?: string; hint?: string } | null = null;
 
-    const extended = await supabase
+    const full = await supabase
       .from("usage_events")
-      .select(EXTENDED_SELECT)
+      .select(FULL_SELECT)
       .or(userScope)
       .order("timestamp", { ascending: false });
 
-    data = (extended.data ?? null) as UsageEventRow[] | null;
-    error = extended.error;
+    data = (full.data ?? null) as UsageEventRow[] | null;
+    error = full.error;
+
+    if (error?.message?.includes("cache_read_tokens")) {
+      const extended = await supabase
+        .from("usage_events")
+        .select(EXTENDED_SELECT)
+        .or(userScope)
+        .order("timestamp", { ascending: false });
+
+      data = (extended.data ?? null) as UsageEventRow[] | null;
+      error = extended.error;
+    }
 
     if (
       error?.message?.includes("cache_saved") ||

@@ -8,6 +8,13 @@ export interface TrackUsagePayload {
   user_id?: string;
   status?: string;
   cache_saved?: number;
+  cache_read_tokens?: number;
+  cache_write_tokens?: number;
+  provider?: string;
+  latency_ms?: number;
+  use_case?: string;
+  success?: boolean;
+  error_type?: string;
 }
 
 export interface UsageEventRow {
@@ -22,6 +29,13 @@ export interface UsageEventRow {
   user_id?: string | null;
   status?: string;
   cache_saved?: number;
+  cache_read_tokens?: number;
+  cache_write_tokens?: number;
+  provider?: string | null;
+  latency_ms?: number | null;
+  use_case?: string | null;
+  success?: boolean | null;
+  error_type?: string | null;
 }
 
 export interface ProjectUsageSummary {

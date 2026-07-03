@@ -66,6 +66,27 @@ export function parseTrackUsagePayload(
       ...(isNonNegativeNumber(payload.cache_saved) && {
         cache_saved: payload.cache_saved,
       }),
+      ...(isNonNegativeNumber(payload.cache_read_tokens) && {
+        cache_read_tokens: Math.floor(payload.cache_read_tokens),
+      }),
+      ...(isNonNegativeNumber(payload.cache_write_tokens) && {
+        cache_write_tokens: Math.floor(payload.cache_write_tokens),
+      }),
+      ...(isNonEmptyString(payload.provider) && {
+        provider: payload.provider.trim(),
+      }),
+      ...(isNonNegativeNumber(payload.latency_ms) && {
+        latency_ms: Math.floor(payload.latency_ms),
+      }),
+      ...(isNonEmptyString(payload.use_case) && {
+        use_case: payload.use_case.trim(),
+      }),
+      ...(typeof payload.success === "boolean" && {
+        success: payload.success,
+      }),
+      ...(isNonEmptyString(payload.error_type) && {
+        error_type: payload.error_type.trim(),
+      }),
     },
   };
 }
