@@ -93,6 +93,9 @@ function buildDashboardStats(rows: UsageEventRow[]): DashboardStats {
     );
   }
 
+  // Round to avoid floating-point dust; keep sub-cent precision for small savings.
+  cacheSavings = Math.round(cacheSavings * 1_000_000) / 1_000_000;
+
   const totalRequests = rows.length;
   const failureRate =
     totalRequests > 0 ? (failedCount / totalRequests) * 100 : 0;

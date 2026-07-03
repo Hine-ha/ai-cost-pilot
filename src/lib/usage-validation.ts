@@ -50,6 +50,13 @@ export function parseTrackUsagePayload(
     ? payload.user_id.trim()
     : undefined;
 
+  const cache_read_tokens = isNonNegativeNumber(payload.cache_read_tokens)
+    ? Math.floor(payload.cache_read_tokens)
+    : 0;
+  const cache_write_tokens = isNonNegativeNumber(payload.cache_write_tokens)
+    ? Math.floor(payload.cache_write_tokens)
+    : 0;
+
   return {
     ok: true,
     data: {
@@ -59,18 +66,14 @@ export function parseTrackUsagePayload(
       output_tokens: payload.output_tokens,
       cost: payload.cost,
       timestamp: new Date(payload.timestamp).toISOString(),
+      cache_read_tokens,
+      cache_write_tokens,
       ...(user_id && { user_id }),
       ...(isNonEmptyString(payload.status) && {
         status: payload.status.trim().toLowerCase(),
       }),
       ...(isNonNegativeNumber(payload.cache_saved) && {
         cache_saved: payload.cache_saved,
-      }),
-      ...(isNonNegativeNumber(payload.cache_read_tokens) && {
-        cache_read_tokens: Math.floor(payload.cache_read_tokens),
-      }),
-      ...(isNonNegativeNumber(payload.cache_write_tokens) && {
-        cache_write_tokens: Math.floor(payload.cache_write_tokens),
       }),
       ...(isNonEmptyString(payload.provider) && {
         provider: payload.provider.trim(),

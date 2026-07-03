@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
+import { computeCacheSavings } from "@/lib/usage-pricing";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
 import { parseTrackUsagePayload } from "@/lib/usage-validation";
 
@@ -49,8 +50,18 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    const cacheSaved = computeCacheSavings(
+      eventData.model,
+      eventData.cache_read_tokens ?? 0,
+      eventData.cache_saved
+    );
+    eventData = { ...eventData, cache_saved: cacheSaved };
+
     const supabase = getSupabaseAdmin();
-    const { data, error } = await supabase
+    let data = null;
+    let error: { message?: string; hint?: string } | null = null;
+
+    const fullInsert = await supabase
       .from("usage_events")
       .insert(eventData)
       .select(
@@ -66,16 +77,28 @@ export async function POST(request: NextRequest) {
           "created_at",
           "cache_read_tokens",
           "cache_write_tokens",
-          "provider",
-          "latency_ms",
-          "use_case",
-          "success",
-          "error_type",
-          "status",
           "cache_saved",
         ].join(", ")
       )
       .single();
+
+    data = fullInsert.data;
+    error = fullInsert.error;
+
+    if (error?.message?.includes("cache_read_tokens")) {
+      const legacy = { ...eventData };
+      delete legacy.cache_read_tokens;
+      delete legacy.cache_write_tokens;
+      const legacyInsert = await supabase
+        .from("usage_events")
+        .insert({ ...legacy, cache_saved: cacheSaved })
+        .select(
+          "id, project_name, model, input_tokens, output_tokens, cost, timestamp, user_id, created_at, cache_saved"
+        )
+        .single();
+      data = legacyInsert.data;
+      error = legacyInsert.error;
+    }
 
     if (error) {
       console.error("[POST /api/track]", error);

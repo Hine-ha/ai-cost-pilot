@@ -20,7 +20,10 @@ export function getInputPricePer1M(model: string): number {
   }
 
   const exact = Object.entries(TRACK_MODEL_INPUT_PRICE).find(
-    ([key]) => normalized === key || normalized.startsWith(`${key}-`)
+    ([key]) =>
+      normalized === key ||
+      normalized.startsWith(`${key}-`) ||
+      normalized.includes(key)
   );
   if (exact) return exact[1];
 
