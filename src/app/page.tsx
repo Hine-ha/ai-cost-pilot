@@ -14,10 +14,10 @@ export default function Home() {
       <Header />
 
       <main>
-        <section className="flex min-h-[calc(100dvh-4.5rem)] items-center bg-gradient-to-b from-slate-50 to-white px-4 py-10 sm:px-6 sm:py-14">
-          <div className="mx-auto w-full max-w-4xl text-center">
+        <section className="flex min-h-[calc(100dvh-4.5rem)] items-center bg-gradient-to-b from-slate-50 to-white px-4 pb-10 pt-2 sm:px-6 sm:pb-12 sm:pt-3">
+          <div className="mx-auto w-full max-w-4xl -translate-y-2 text-center sm:-translate-y-3">
             <div className="mb-5 inline-flex items-center rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm font-medium text-slate-600 shadow-sm">
-              生成AIを業務利用する企業向け
+              Anthropic / OpenAI を使う開発者向け
             </div>
             <h1 className="font-serif text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
               生成AI APIコストを見える化し、
