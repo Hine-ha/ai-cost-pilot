@@ -49,6 +49,11 @@ export interface ProjectUsageSummary {
   models: string[];
 }
 
+export interface TopUseCaseInsight {
+  use_case: string;
+  total_cost: number;
+}
+
 export interface DashboardStats {
   monthly_total_cost: number;
   total_requests: number;
@@ -80,6 +85,7 @@ export interface DashboardResponse {
     total_cost: number;
   };
   stats: DashboardStats;
+  top_use_case: TopUseCaseInsight | null;
   daily_cost_trend: DailyCostPoint[];
   model_breakdown: ModelUsageBreakdown[];
   available_projects: string[];

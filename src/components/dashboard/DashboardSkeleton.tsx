@@ -6,8 +6,8 @@ export default function DashboardSkeleton() {
         <div className="h-4 w-72 rounded bg-gray-100" />
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {Array.from({ length: 4 }).map((_, index) => (
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        {Array.from({ length: 5 }).map((_, index) => (
           <div
             key={index}
             className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm"

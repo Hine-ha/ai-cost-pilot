@@ -9,6 +9,7 @@ import SdkConfigPanel from "@/components/dashboard/SdkConfigPanel";
 import {
   formatPercent,
   formatUsdAdaptive,
+  formatUsdFourDecimals,
   getChartCostDomain,
 } from "@/lib/calculator";
 import {
@@ -237,7 +238,7 @@ export default function DashboardPage() {
 
         {!isLoading && !error && data && (
           <div className="space-y-8">
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
               <StatCard
                 label={t.monthlyCost}
                 value={formatUsdAdaptive(data.stats.monthly_total_cost)}
@@ -259,6 +260,15 @@ export default function DashboardPage() {
                 value={formatUsdAdaptive(data.stats.cache_savings)}
                 subtext={t.usd}
                 accent="success"
+              />
+              <StatCard
+                label="Top Use Case"
+                value={data.top_use_case?.use_case ?? "No data yet"}
+                subtext={
+                  data.top_use_case
+                    ? formatUsdFourDecimals(data.top_use_case.total_cost)
+                    : undefined
+                }
               />
             </div>
 

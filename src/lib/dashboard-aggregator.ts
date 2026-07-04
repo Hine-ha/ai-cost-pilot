@@ -5,6 +5,7 @@ import {
   DashboardStats,
   ModelUsageBreakdown,
   ProjectUsageSummary,
+  TopUseCaseInsight,
   UsageEventRow,
 } from "@/types/usage";
 
@@ -108,6 +109,36 @@ function buildDashboardStats(rows: UsageEventRow[]): DashboardStats {
   };
 }
 
+export function buildTopUseCase(rows: UsageEventRow[]): TopUseCaseInsight | null {
+  const costByUseCase = new Map<string, number>();
+
+  for (const row of rows) {
+    const useCase = row.use_case?.trim();
+    if (!useCase) continue;
+    costByUseCase.set(
+      useCase,
+      (costByUseCase.get(useCase) ?? 0) + Number(row.cost)
+    );
+  }
+
+  if (costByUseCase.size === 0) return null;
+
+  let topUseCase = "";
+  let topCost = 0;
+
+  for (const [name, cost] of Array.from(costByUseCase.entries())) {
+    if (cost > topCost) {
+      topCost = cost;
+      topUseCase = name;
+    }
+  }
+
+  return {
+    use_case: topUseCase,
+    total_cost: Math.round(topCost * 10_000) / 10_000,
+  };
+}
+
 export function aggregateUsageByProject(
   rows: UsageEventRow[]
 ): Pick<DashboardResponse, "projects" | "summary"> {
@@ -181,6 +212,7 @@ export function buildDashboardResponse(
   return {
     ...base,
     stats: buildDashboardStats(rows),
+    top_use_case: buildTopUseCase(rows),
     daily_cost_trend: buildDailyCostTrend(rows),
     model_breakdown: buildModelBreakdown(rows),
   };

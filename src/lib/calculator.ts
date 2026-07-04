@@ -7,6 +7,15 @@ export function formatUsd(amount: number): string {
   }).format(amount);
 }
 
+export function formatUsdFourDecimals(amount: number): string {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 4,
+    maximumFractionDigits: 4,
+  }).format(amount);
+}
+
 export function formatUsdAdaptive(amount: number): string {
   const abs = Math.abs(amount);
   const digits =
