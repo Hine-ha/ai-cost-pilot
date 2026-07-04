@@ -27,7 +27,6 @@ export default function Header() {
 
   const isDocs = pathname === "/docs";
   const isDashboard = pathname === "/dashboard";
-  const isDiagnose = pathname === "/diagnose";
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/80 backdrop-blur-md">
@@ -52,16 +51,6 @@ export default function Header() {
           </Link>
           <Link href="/dashboard" className={navLinkClass(isDashboard)}>
             ダッシュボード
-          </Link>
-          <Link
-            href="/diagnose"
-            className={`inline-flex items-center rounded-lg px-4 py-2 font-medium shadow-sm transition ${
-              isDiagnose
-                ? "bg-sky-800 text-white ring-2 ring-sky-300 ring-offset-1"
-                : "bg-sky-700 text-white hover:bg-sky-800 hover:shadow-md"
-            }`}
-          >
-            診断を始める
           </Link>
           <a
             href={FEEDBACK_FORM_URL}

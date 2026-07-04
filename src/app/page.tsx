@@ -1,7 +1,7 @@
 import Link from "next/link";
 import {
   ChartBarIcon,
-  ExclamationTriangleIcon,
+  CodeBracketIcon,
   LightBulbIcon,
 } from "@heroicons/react/24/outline";
 import FeatureCard from "@/components/FeatureCard";
@@ -24,15 +24,21 @@ export default function Home() {
               無駄な支出を削減
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-balance text-lg leading-relaxed text-slate-600">
-              ChatGPT / Claude / Gemini などの LLM API
-              利用料を試算し、失敗リクエスト・再試行・過剰なトークン消費による無駄を診断します。
+              TokenLens SDK で Anthropic / OpenAI の API 利用量とコストを自動記録。
+              ダッシュボードでプロジェクト別の推移と Prompt Caching による削減額を確認できます。
             </p>
-            <div className="mt-10">
+            <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
-                href="/diagnose"
+                href="/docs"
                 className="inline-flex items-center rounded-xl bg-sky-700 px-8 py-3.5 text-base font-semibold text-white shadow-md shadow-sky-900/10 transition hover:-translate-y-0.5 hover:bg-sky-800 hover:shadow-lg hover:shadow-sky-900/15"
               >
-                3分でコスト診断を始める
+                SDK ドキュメントを見る
+              </Link>
+              <Link
+                href="/dashboard"
+                className="inline-flex items-center rounded-xl border border-slate-300 bg-white px-8 py-3.5 text-base font-semibold text-slate-800 shadow-sm transition hover:bg-slate-50"
+              >
+                ダッシュボード
               </Link>
             </div>
           </div>
@@ -45,43 +51,26 @@ export default function Home() {
                 主な機能
               </h2>
               <p className="mt-3 text-slate-600">
-                API コストの見える化から削減施策まで、ワンストップで診断
+                2 行のコードで API コストの可視化とキャッシュ削減の追跡
               </p>
             </div>
             <div className="grid gap-6 md:grid-cols-3">
               <FeatureCard
-                icon={ChartBarIcon}
-                title="AI API コストの可視化"
-                description="モデル別・ユースケース別に月次コストを試算。トークン単価に基づいた正確な見積もりを提供します。"
+                icon={CodeBracketIcon}
+                title="SDK 自動トラッキング"
+                description="track() でクライアントをラップするだけ。トークン数・コスト・キャッシュヒットを自動送信します。"
               />
               <FeatureCard
-                icon={ExclamationTriangleIcon}
-                title="失敗リクエストと再試行コストの検出"
-                description="失敗率と再試行回数から、無駄な API 呼び出しコストを特定。改善余地を数値で把握できます。"
+                icon={ChartBarIcon}
+                title="リアルタイムダッシュボード"
+                description="プロジェクト別のリクエスト数、モデル別コスト、30 日間の支出トレンドを一覧表示。"
               />
               <FeatureCard
                 icon={LightBulbIcon}
-                title="モデル切替とキャッシュによる削減提案"
-                description="より低コストなモデルへの切替やキャッシュ導入など、具体的な削減シナリオを自動提案します。"
+                title="Prompt Caching 削減額"
+                description="cache_read_tokens からキャッシュによる節約金額を自動計算し、ダッシュボードに表示。"
               />
             </div>
-          </div>
-        </section>
-
-        <section className="px-4 py-16 sm:px-6">
-          <div className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
-            <h2 className="font-serif text-xl font-bold text-slate-900">
-              3 分でコスト診断を完了
-            </h2>
-            <p className="mt-3 text-slate-600">
-              プロジェクト情報と API 利用状況を入力するだけで、すぐに診断結果を確認できます。
-            </p>
-            <Link
-              href="/diagnose"
-              className="mt-6 inline-flex items-center rounded-xl bg-sky-700 px-6 py-3 font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-sky-800 hover:shadow-md"
-            >
-              3分でコスト診断を始める
-            </Link>
           </div>
         </section>
       </main>

@@ -4,9 +4,9 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://my-tokenlens.vercel.app"),
-  title: "TokenLens | 生成AIコスト診断ツール",
+  title: "TokenLens | AI API コスト可視化",
   description:
-    "LLM API の利用料、失敗リクエスト、過剰なトークン消費を可視化し、削減ポイントを提案します。",
+    "LLM API の利用量・コスト・キャッシュ削減を SDK で自動記録し、ダッシュボードで可視化します。",
 };
 
 export default function RootLayout({

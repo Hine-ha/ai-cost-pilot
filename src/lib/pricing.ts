@@ -1,13 +1,5 @@
 import { ModelId, ModelPricing } from "@/types";
 
-export const MODEL_OPTIONS: { value: ModelId; label: string }[] = [
-  { value: "gpt-4.1", label: "GPT-4.1（OpenAI）" },
-  { value: "gpt-4.1-mini", label: "GPT-4.1 ミニ（OpenAI）" },
-  { value: "claude-sonnet", label: "Claude Sonnet（Anthropic）" },
-  { value: "gemini-1.5-pro", label: "Gemini 1.5 Pro（Google）" },
-  { value: "deepseek-chat", label: "DeepSeek Chat（DeepSeek）" },
-];
-
 export const MODEL_PRICING: Record<ModelId, ModelPricing> = {
   "gpt-4.1": {
     label: "GPT-4.1",
@@ -36,16 +28,6 @@ export const MODEL_PRICING: Record<ModelId, ModelPricing> = {
   },
 };
 
-export const USE_CASE_OPTIONS = [
-  "カスタマーサポート",
-  "翻訳",
-  "要約",
-  "文書分析",
-  "コード生成",
-  "社内ナレッジ検索",
-  "その他",
-] as const;
-
 const MODEL_ALIASES: Record<string, ModelId> = {
   "gpt-4.1": "gpt-4.1",
   "gpt-4.1（openai）": "gpt-4.1",
@@ -69,11 +51,6 @@ export function resolveModelId(rawModel: string): ModelId | null {
   if (MODEL_ALIASES[normalized]) {
     return MODEL_ALIASES[normalized];
   }
-
-  const byLabel = MODEL_OPTIONS.find(
-    (option) => option.label.toLowerCase() === normalized
-  );
-  if (byLabel) return byLabel.value;
 
   const byPricing = (Object.entries(MODEL_PRICING) as [ModelId, ModelPricing][]).find(
     ([, pricing]) => pricing.label.toLowerCase() === normalized
