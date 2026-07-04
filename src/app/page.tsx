@@ -6,6 +6,7 @@ import {
 } from "@heroicons/react/24/outline";
 import FeatureCard from "@/components/FeatureCard";
 import Header from "@/components/Header";
+import HeroCodeExample from "@/components/HeroCodeExample";
 
 export default function Home() {
   return (
@@ -13,9 +14,9 @@ export default function Home() {
       <Header />
 
       <main>
-        <section className="bg-gradient-to-b from-slate-50 to-white px-4 py-20 sm:px-6 sm:py-28">
-          <div className="mx-auto max-w-4xl text-center">
-            <div className="mb-6 inline-flex items-center rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm font-medium text-slate-600 shadow-sm">
+        <section className="flex min-h-[calc(100dvh-4.5rem)] items-center bg-gradient-to-b from-slate-50 to-white px-4 py-10 sm:px-6 sm:py-14">
+          <div className="mx-auto w-full max-w-4xl text-center">
+            <div className="mb-5 inline-flex items-center rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm font-medium text-slate-600 shadow-sm">
               生成AIを業務利用する企業向け
             </div>
             <h1 className="font-serif text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
@@ -23,11 +24,12 @@ export default function Home() {
               <br className="hidden sm:block" />
               無駄な支出を削減
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-balance text-lg leading-relaxed text-slate-600">
+            <p className="mx-auto mt-5 max-w-2xl text-balance text-lg leading-relaxed text-slate-600">
               TokenLens SDK で Anthropic / OpenAI の API 利用量とコストを自動記録。
               ダッシュボードでプロジェクト別の推移と Prompt Caching による削減額を確認できます。
             </p>
-            <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <HeroCodeExample />
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
                 href="/docs"
                 className="inline-flex items-center rounded-xl bg-sky-700 px-8 py-3.5 text-base font-semibold text-white shadow-md shadow-sky-900/10 transition hover:-translate-y-0.5 hover:bg-sky-800 hover:shadow-lg hover:shadow-sky-900/15"
