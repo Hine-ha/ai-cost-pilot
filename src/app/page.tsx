@@ -20,13 +20,10 @@ export default function Home() {
               Anthropic / OpenAI を使う開発者向け
             </div>
             <h1 className="font-serif text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
-              生成AI APIコストを見える化し、
-              <br className="hidden sm:block" />
-              無駄な支出を削減
+              Visualize Your AI API Costs
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-balance text-lg leading-relaxed text-slate-600">
-              TokenLens SDK で Anthropic / OpenAI の API 利用量とコストを自動記録。
-              ダッシュボードでプロジェクト別の推移と Prompt Caching による削減額を確認できます。
+              生成AI APIのコストをリアルタイムで追跡。2行のコードで導入完了。
             </p>
             <HeroCodeExample />
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -34,7 +31,7 @@ export default function Home() {
                 href="/docs"
                 className="inline-flex items-center rounded-xl bg-sky-700 px-8 py-3.5 text-base font-semibold text-white shadow-md shadow-sky-900/10 transition hover:-translate-y-0.5 hover:bg-sky-800 hover:shadow-lg hover:shadow-sky-900/15"
               >
-                SDK ドキュメントを見る
+                Get Started Free
               </Link>
               <Link
                 href="/dashboard"
